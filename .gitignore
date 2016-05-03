@@ -1,0 +1,41 @@
+node_modules
+www/
+src/libs
+wordpress
+
+.DS_Store
+.ftppass
+.tmp/
+.Trash-*
+.directory
+
+### Bower ###
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+
+### Sass ###
+.sass-cache/
+
+### Linux ###
+*~
+
+### Node ###
+# Logs
+logs
+*.log
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Windows ###
+Thumbs.db
+ehthumbs.db
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk

@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title Gulp Project
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    link(rel="stylesheet" href="css/libs.min.css")
+    link(rel="stylesheet" href="css/main.min.css")
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet')
+    meta(http-equiv="X-UA-Compatible" content="IE=Edge")
+
+    // [if lte IE 8]
+    script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
+    //[endif]
+  body.body#body
+    header
+      h1
+        - echo "Gulp Project";
+    footer
+    
+    script(src="js/main.min.js")

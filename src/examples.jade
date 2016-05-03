@@ -1,0 +1,28 @@
+// Examples using jade with php
+
+// Using code php
+- echo "Exampleasdasdasdads";
+
+// Using dynamic class
+- $class = "dynamic-class";
+h1(class != echo("class") + " fixed-class") Example
+
+// With WordPress base functions
+- get_header();
+main
+  - if (have_posts()):
+    - while (have_posts()):
+      - the_post();
+        article.container
+          - get_template_part('title');
+          - get_template_part('meta');
+          - if (get_field('post_intro')):
+            p.intro
+              - the_field('post_intro');
+          - endif;
+          - the_content();
+        - get_template_part('comments');
+    - endwhile;
+  - endif;
+- get_sidebar();
+- get_footer();

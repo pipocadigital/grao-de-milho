@@ -1,0 +1,33 @@
+=centerX()
+	left: 50%
+	-ms-transform: translateX(-50%)
+	-webkit-transform: translateX(-50%)
+	transform: translateX(-50%)
+
+=centerY()
+	top: 50%
+	-ms-transform: translateY(-50%)
+	-webkit-transform: translateY(-50%)
+	transform: translateY(-50%)
+
+=center()
+	left: 50%
+	top: 50%
+	-ms-transform: translate(-50%, -50%)
+	-webkit-transform: translate(-50%, -50%)
+	transform: translate(-50%, -50%)
+
+=transition($value)
+	-webkit-transition: all $value ease
+	transition: all $value ease
+
+=triangle($color)
+	content: ''
+	display: inline-block
+	vertical-align: middle
+	margin-right: 10px
+	width: 0
+	height: 0
+	border-left: 12px solid transparent
+	border-right: 12px solid transparent
+	border-top: 15px solid $color
