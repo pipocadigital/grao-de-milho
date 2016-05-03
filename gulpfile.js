@@ -33,7 +33,7 @@ projectName = packageJson.name,
 // Config
 config = {
   compressed: true,
-  format: 'default',
+  format: 'wordpress',
   localhost: '127.0.0.1',
   port: '3001'
 },
@@ -88,7 +88,7 @@ mainBowerFiles  = require('gulp-main-bower-files');
 
 
 // Tasks
-paths = paths['default'];
+paths = paths[config.format];
 
 // Browser Sync
 gulp.task('browser-sync', function() {

@@ -9,6 +9,10 @@ wordpress
 .Trash-*
 .directory
 
+### Composer ###
+vendor
+composer.lock
+
 ### Bower ###
 bower_components
 .bower-cache

@@ -20,7 +20,7 @@
   },
   "scripts": {
     "preinstall": "npm install -g bower",
-    "postinstall": "bower install",
+    "postinstall": "bash pipoca.sh",
     "start": "gulp",
     "stop": "rm -rf node_modules",
     "lint": "./node_modules/.bin/jscs src && ./node_modules/.bin/jshint src",
