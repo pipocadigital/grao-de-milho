@@ -50,11 +50,12 @@ paths = {
     images: 'src/img/**/*.*',
     imagesDest: 'www/img',
     pages: 'src/**/*.jade',
+    pagesDest: 'www/',
     fontsDest: 'www/fonts',
   },
   wordpress:
   {
-    basePath: 'wordpress/wp-content/themes/'+projectName,
+    basePath: 'wordpress/',
     scripts: 'src/js/**/*.js',
     scriptsDest: 'wordpress/wp-content/themes/'+projectName+'/js',
     styles: 'src/css/**/*.sass',
@@ -62,6 +63,7 @@ paths = {
     images: 'src/img/**/*.*',
     imagesDest: 'wordpress/wp-content/themes/'+projectName+'/img',
     pages: 'src/**/*.jade',
+    pagesDest: 'wordpress/wp-content/themes/'+projectName,
     fontsDest: 'wordpress/wp-content/themes/'+projectName+'/fonts'
   }
 },
@@ -102,7 +104,7 @@ gulp.task('browser-sync', function() {
 // Clean
 gulp.task('clean', function() {
   return del([
-    paths.basePath
+    paths.pagesDest
   ]);
 });
 
@@ -170,7 +172,7 @@ gulp.task('pages', function(){
           }
         }
     }))
-    .pipe(gulp.dest(paths.basePath))
+    .pipe(gulp.dest(paths.pagesDest))
     .pipe(browserSync.reload({stream:true}))
 });
 
