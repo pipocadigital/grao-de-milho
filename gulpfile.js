@@ -128,7 +128,13 @@ gulp.task('reload', function () {
 
 // Styles
 gulp.task('styles', function(){
-  gulp.src([paths.styles])
+
+  // Wp theme style
+  if(config.format === 'wordpress'){
+    gulp.src(['src/*.css']).pipe(gulp.dest(paths.pagesDest));
+  }
+
+  return gulp.src([paths.styles])
     .pipe(plumber({
       errorHandler: function (error) {
         console.log(error.message);
@@ -174,6 +180,7 @@ gulp.task('pages', function(){
     }))
     .pipe(gulp.dest(paths.pagesDest))
     .pipe(browserSync.reload({stream:true}))
+
 });
 
 // Images
@@ -191,7 +198,16 @@ gulp.task('libs', function() {
   var fontFilter = gulpFilter(['**/*.eot', '**/*.woff' , '**/*.woff2' , '**/*.svg', '**/*.ttf'], {restore: true});
 
   return gulp.src('./bower.json')
-    .pipe(mainBowerFiles())
+    .pipe(mainBowerFiles({
+      //"overrides": {
+      //  "font-awesome": {
+      //    "main": [
+      //      './css/font-awesome.min.css',
+      //      './fonts/*.*'
+      //    ]
+      //  }
+      //}
+    }))
     .pipe(plumber({
       errorHandler: function (error) {
         console.log(error.message);
