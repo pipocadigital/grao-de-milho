@@ -73,7 +73,7 @@ gulp            = require('gulp'),
 plumber         = require('gulp-plumber'),
 rename          = require('gulp-rename'),
 autoprefixer    = require('gulp-autoprefixer'),
-minifyCss       = require('gulp-minify-css'),
+cleanCss        = require('gulp-clean-css'),
 concat          = require('gulp-concat'),
 uglify          = require('gulp-uglify'),
 imagemin        = require('gulp-imagemin'),
@@ -224,7 +224,7 @@ gulp.task('libs', function() {
 
     //CSS
     .pipe(cssFilter)
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(cleanCss({compatibility: 'ie8'}))
     .pipe(concat('libs.min.css'))
     .pipe(gulp.dest(paths.stylesDest))
     .pipe(cssFilter.restore)
