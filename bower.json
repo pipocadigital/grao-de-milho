@@ -2,5 +2,7 @@
   "name": "grao-de-milho",
   "private": "true",
   "dependencies": {
+    "jquery": "^3.0.0",
+    "font-awesome": "^4.6.3"
   }
 }
