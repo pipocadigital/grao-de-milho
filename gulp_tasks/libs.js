@@ -20,14 +20,14 @@ gulp.task('libs', function() {
 
   return gulp.src('./bower.json')
     .pipe(mainBowerFiles({
-      //"overrides": {
-      //  "font-awesome": {
-      //    "main": [
-      //      './css/font-awesome.min.css',
-      //      './fonts/*.*'
-      //    ]
-      //  }
-      //}
+      "overrides": {
+       "font-awesome": {
+         "main": [
+           './css/font-awesome.min.css',
+           './fonts/*.*'
+         ]
+       }
+      }
     }))
     .pipe(plumber({
       errorHandler: function (error) {

@@ -22,6 +22,7 @@ gulp.task('pages', function(){
         }
     }))
     .pipe(gulp.dest(gulp.paths.pagesDest))
-    .pipe(browserSync.reload({stream:true}))
+    .pipe(browserSync.reload({stream:true}));
 
+  browserSync.reload();
 });

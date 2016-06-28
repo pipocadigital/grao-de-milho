@@ -1,0 +1,51 @@
+-
+  //- config
+  $template_directory = '';
+  //- $template_directory = get_bloginfo('template_directory');
+  //- $linkHome = get_option('home');
+  
+  //- rede sociais
+  //- $url_facebook = get_theme_mod('url_facebook');
+  //- $url_twitter = get_theme_mod('url_twitter');
+  //- $url_instagram = get_theme_mod('url_instagram');
+  //- $url_youtube = get_theme_mod('url_youtube');
+
+doctype html
+- echo "<html lang='pt-Br'>";
+  head
+    title Grão de Milho - Pipoca Starter
+    
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=Edge")
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    
+    link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet")
+    link(href="https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css" rel="stylesheet")
+    
+    link(rel="stylesheet" href!=echo('template_directory') + "/css/libs.min.css")
+    link(rel="stylesheet" href!=echo('template_directory') + "/css/main.min.css")
+    
+    // [if lte IE 8]
+    script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
+    //[endif]
+    
+    //- - wp_head();
+  - echo "<body>";
+    
+    header( class="header" )
+      div( class="container" )
+        nav( class="menu" )
+          div( id="btn-menu" class="btn-menu" )
+            span
+          ul( class="nav navbar-nav" )
+            li( class="menu-item current-menu-item" )
+              a( title="Página Inicial" href="#" ) Página Inicial
+            li( class="menu-item" )
+              a( title="Archive" href="#" ) Archive
+            li( class="menu-item" )
+              a( title="Categoria" href="#" ) Categoria
+            li( class="menu-item" )
+              a( title="Contato" href="#" ) Contato
+            li( class="menu-item" )
+              a( title="Elementos & Componentes" href="#" ) Elementos & Componentes
+      

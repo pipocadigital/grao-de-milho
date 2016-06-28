@@ -8,7 +8,7 @@ var gulp            = require('gulp'),
 gulp.task('connect-sync', function() {
   connect.server({
     port: gulp.config.port,
-    base: gulp.paths.basePath,
+    base: gulp.paths.pagesDest,
     livereload: true
     }, function (){
     browserSync({
