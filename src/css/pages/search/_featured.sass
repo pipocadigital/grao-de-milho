@@ -1,0 +1,26 @@
+.featured
+  .input-search
+    width: 100%
+    max-width: 400px
+    margin-top: 20px
+    overflow: hidden
+    border-radius: 100px
+    input
+      min-height: 40px
+      padding: 10px 20px !important
+      font-size: .8em
+      text-align: center
+    button
+      height: 100%
+      width: 50px
+      right: 0 !important
+      padding-right: 5px
+      border: none
+      background: #CCC
+      cursor: pointer
+      +transition(350ms)
+      &:hover
+        background-color: #BBB
+
+    input:focus + button
+      background-color: #BBB
