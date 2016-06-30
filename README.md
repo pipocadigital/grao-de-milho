@@ -1,4 +1,4 @@
-![cover](http://i.giphy.com/3o6gEf38BrzrRYbDXi.gif)
+<p align="center"><img width="600" src="http://i.giphy.com/3o6gEf38BrzrRYbDXi.gif"></p>
 
 > Um boilerplate desenvolvido para acelerar o desenvolvido de sites com [WordPress](https://br.wordpress.org) pelo time de desenvolvimento da [Pipoca Digital](http://www.pipocadigital.com.br/).
 
