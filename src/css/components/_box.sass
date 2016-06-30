@@ -1,0 +1,48 @@
+.box
+  display: inline-flex
+  flex-direction: column
+  width: 100%
+  font-size: 18px
+
+  border: 1px solid #DDD // optional
+  max-width: 300px // optional
+
+  > .figure,
+  > .text
+    display: block
+    width: 100%
+
+  > .figure
+    line-height: 0
+    img
+      width: 100%
+
+  > .text
+    padding: 15px
+    .title,
+    .title a
+      font-size: 1.1em
+      margin-bottom: 10px
+      color: #000
+    .excerpt
+      font-size: .8em
+      color: rgba(#000, .7)
+
+  > .bottom
+    padding: 0 15px 15px
+    &.bottom-full
+      padding: 0
+
+
+
+  // round
+  &.box-round
+    border-radius: 5px
+    overflow: hidden
+
+
+  // inline
+  &.box-inline
+    flex-direction: row
+
+    max-width: 470px //optional

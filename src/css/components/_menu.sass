@@ -1,0 +1,90 @@
+.menu
+  display: flex
+  align-items: center
+  .navbar-nav
+    display: inline-block
+    list-style: none
+    .menu-item
+      position: relative
+      display: inline-block
+      a
+        display: block
+        width: 100%
+        padding: 15px
+        text-decoration: none
+        color: #000
+        +transition(350ms)
+        &:hover
+          background-color: rgba(#000, .1)
+      &.current-menu-item
+        &:before
+          content: ''
+          position: absolute
+          top: 0
+          +centerX()
+          display: block
+          width: 0
+          height: 0
+          border-left: 13px solid transparent
+          border-right: 13px solid transparent
+          border-top: 8px solid #000
+
+
+  // btn menu
+  .btn-menu
+    position: relative
+    display: none
+    width: 30px
+    height: 30px
+    margin: 10px
+    cursor: pointer
+    &:before,
+    &:after,
+    span
+      content: ''
+      display: block
+      width: 100%
+      height: 3px
+      background-color: #000
+      position: absolute
+      transition: all 350ms linear
+    &:before
+      top: 5px
+      left: 0
+    &:after
+      bottom: 5px
+      right: 0
+    span
+      top: 50%
+      transform: translateY(-50%)
+
+.menu-open
+  .menu
+    .btn-menu
+      span
+        opacity: 0
+      &:before
+        top: 50%
+        transform: translateY(-50%) rotate(-40deg)
+      &:after
+        bottom: 50%
+        transform: translateY(50%) rotate(40deg)
+
+    .navbar-nav
+      display: block
+
+
+
+@media ( max-width: 800px)
+  .menu
+    flex-direction: column
+    align-items: flex-start
+    .btn-menu
+      display: block
+    .navbar-nav
+      display: none
+      width: 100%
+      padding-bottom: 10px
+      .menu-item
+        display: block
+        width: 100%

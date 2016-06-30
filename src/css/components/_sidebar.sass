@@ -1,0 +1,33 @@
+.sidebar
+  border-radius: 5px
+  border: 1px solid #DDD
+  padding: 15px
+  .title-sidebar
+    font-weight: 600
+    margin-bottom: 10px
+    padding: 10px
+    background-color: rgba(#000, .1)
+  .box
+    position: relative
+    border: none
+    padding: 5px 0
+    .text
+      font-size: 1rem
+      padding: 0
+      .title
+        margin-bottom: 5px
+
+    &:before
+      content: ''
+      display: block
+      position: absolute
+      top: 0
+      left: -15px
+      width: 5px
+      height: 100%
+      background-color: #000
+      opacity: 0
+      +transition(500ms)
+    &:hover
+      &:before
+        opacity: 1

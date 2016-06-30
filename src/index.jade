@@ -1,21 +1,32 @@
-doctype html
-html
-  head
-    title Gulp Project
-    meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width,initial-scale=1")
-    link(rel="stylesheet" href="css/libs.min.css")
-    link(rel="stylesheet" href="css/main.min.css")
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet')
-    meta(http-equiv="X-UA-Compatible" content="IE=Edge")
-
-    // [if lte IE 8]
-    script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
-    //[endif]
-  body.body#body
-    header
-      h1
-        - echo "Gulp Project";
-    footer
+//- header
+- include('header.php');
     
-    script(src="js/main.min.js")
+  div( class="welcome" )
+    div( class="container" )
+      h1( class="title" ) Grão de Milho <span class="heart fa fa-heart"></span> Pipoca Starter
+      h3( class="subtitle" ) Um boilerplate pronto para você iniciar seu projeto wordpress!
+  
+  div( class="features" )
+    div( class="container" )
+      div( class="row" )
+        div( class="col-xs-4" )
+          div( class="box-feature" )
+            span( class="icon fa fa-bolt" )
+            h4( class="title" ) Rápido Desenvolvimento
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Suscipit quia, iusto nisi nesciunt.consectetur adipisicing elit.
+        
+        div( class="col-xs-4" )
+          div( class="box-feature" )
+            span( class="icon fa fa-code" )
+            h4( class="title" ) Fácil de se Trabalhar
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Est, maxime ea, excepturi sint. consectetur adipisicing elit.
+        
+        div( class="col-xs-4" )
+          div( class="box-feature" )
+            span( class="icon fa fa-wordpress" )
+            h4( class="title" ) Estrutura WordPress
+            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Sit enim id ex qui neque rerum. consectetur adipisicing elit.
+  
+    
+//- footer
+- include('footer.php') 

@@ -1,0 +1,71 @@
+.share
+  display: block
+  margin-top: 30px
+  padding-top: 5px
+  text-align: right
+  border-top: 1px solid #DDD
+  > .item
+    display: inline-block
+    width: 40px
+    height: 40px
+    line-height: 40px
+    text-align: center
+    text-decoration: none
+    transition: all 250ms linear
+
+    // colors
+    &.item-facebook
+      color: #3765a3
+    &.item-twitter
+      color: #00aced
+    &.item-google-plus
+      color: #dd4b3e
+    &.item-linkedin
+      color: #0274b3
+    &.item-pinterest
+      color: #cb2027
+    &.item-tumblr
+      color: #36465d
+
+
+  // group
+  &.share-group
+    display: inline-flex
+    background-color: #EEE
+    > .item:hover
+      color: #FFF
+      &.item-facebook
+        background-color: #3765a3
+      &.item-twitter
+        background-color: #00aced
+      &.item-google-plus
+        background-color: #dd4b3e
+      &.item-linkedin
+        background-color: #0274b3
+      &.item-pinterest
+        background-color: #cb2027
+      &.item-tumblr
+        background-color: #36465d
+
+
+  // outline
+  &.share-outline
+    border: 1px solid #EEE
+    background: transparent
+
+
+  // round
+  &.share-round
+    overflow: hidden
+    border-radius: 5px
+
+
+  // round full
+  &.share-round-full
+    overflow: hidden
+    border-radius: 100px
+    > .item
+      &:first-child
+        padding: 0 10px 0 15px
+      &:last-child
+        padding: 0 15px 0 10px
