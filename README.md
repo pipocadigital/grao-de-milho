@@ -16,7 +16,7 @@ Vamos instalar as dependencias de nosso projeto
 - [NodeJS](http://nodejs.org/)
 - [GulpJS](http://gulpjs.com/)
 
-```
+```sh
 # Clone o boilerplate
 $ git clone https://github.com/pipocadigital/grao-de-milho
 $ cd grao-de-milho
@@ -67,7 +67,6 @@ $ npm install
 ### Tasks do Gulp
 - `gulp`: Task default que executa todas as tasks, inicia um server e ativa o `watch` que executa na alterações dos arquivos
 - `gulp build`: Executa todas as tasks acima, preparando para fazer o deploy
-
 - `gulp pages`: Compila os arquivos .jade
 - `gulp styles`: Compila os arquivos .sass
 - `gulp scripts`: Verifica a qualidade dos arquivos js e minifica
