@@ -5,7 +5,7 @@ var gulp            = require('gulp'),
     concat          = require('gulp-concat'),
     rename          = require('gulp-rename'),
     uglify          = require('gulp-uglify'),
-    minifyCss       = require('gulp-minify-css'),
+    cleanCss        = require('gulp-clean-css'),
     flatten         = require('gulp-flatten'),
     browserSync     = require('browser-sync');
 
@@ -45,7 +45,7 @@ gulp.task('libs', function() {
 
     //CSS
     .pipe(cssFilter)
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(cleanCss({compatibility: 'ie8'}))
     .pipe(concat('libs.min.css'))
     .pipe(gulp.dest(gulp.paths.stylesDest))
     .pipe(cssFilter.restore)
