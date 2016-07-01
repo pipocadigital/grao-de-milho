@@ -1,0 +1,12 @@
+-
+  function admin_customizer_register( $wp_customize ) {
+  
+    include('_redesociais.php');
+  
+  }
+  add_action( 'customize_register', 'admin_customizer_register' );
+  
+  //- Add logo support
+  add_theme_support( 'custom-logo', array(
+    'flex-height' => true,
+  ));

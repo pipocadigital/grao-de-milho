@@ -1,19 +1,34 @@
 -
   //- config
-  $template_directory = '';
-  //- $template_directory = get_bloginfo('template_directory');
-  //- $linkHome = get_option('home');
+  $template_directory = get_bloginfo('template_directory');
+  $linkHome = get_option('home');
   
   //- rede sociais
-  //- $url_facebook = get_theme_mod('url_facebook');
-  //- $url_twitter = get_theme_mod('url_twitter');
-  //- $url_instagram = get_theme_mod('url_instagram');
-  //- $url_youtube = get_theme_mod('url_youtube');
+  $url_facebook = get_theme_mod('url_facebook');
+  $url_twitter = get_theme_mod('url_twitter');
+  $url_instagram = get_theme_mod('url_instagram');
+  $url_youtube = get_theme_mod('url_youtube');
+  $url_googlePlus = get_theme_mod('url_google-plus');
+  $url_linkedin = get_theme_mod('url_linkedin');
+  $url_pinterest = get_theme_mod('url_pinterest');
+  $url_tumblr = get_theme_mod('url_tumblr');
 
 doctype html
 - echo "<html lang='pt-Br'>";
   head
-    title Grão de Milho - Pipoca Starter
+    title
+      -
+        if (is_home()): 
+          bloginfo('name');
+        elseif (is_category()): 
+          single_cat_title(); echo ' -  ' ; bloginfo('name');
+        elseif (is_single()): 
+          single_post_title();
+        elseif (is_page()): 
+          bloginfo('name'); echo ': ' ; single_post_title();
+        else: 
+          wp_title('',true);
+        endif;
     
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=Edge")
@@ -29,23 +44,21 @@ doctype html
     script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
     //[endif]
     
-    //- - wp_head();
-  - echo "<body>";
+    - wp_head();
+  - $bodyClass = implode( " ", get_body_class() );
+  - echo "<body class='".$bodyClass."'>";
     
     header( class="header" )
       div( class="container" )
         nav( class="menu" )
           div( id="btn-menu" class="btn-menu" )
             span
-          ul( class="nav navbar-nav" )
-            li( class="menu-item current-menu-item" )
-              a( title="Página Inicial" href="#" ) Página Inicial
-            li( class="menu-item" )
-              a( title="Archive" href="#" ) Archive
-            li( class="menu-item" )
-              a( title="Categoria" href="#" ) Categoria
-            li( class="menu-item" )
-              a( title="Página" href="#" ) Página
-            li( class="menu-item" )
-              a( title="Elementos & Componentes" href="#" ) Elementos & Componentes
+          -
+            wp_nav_menu(
+                array(
+                'menu'           => 'Menu Principal',
+                'container'      => false,
+                'menu_class'     => 'nav navbar-nav'
+              )
+            )
       

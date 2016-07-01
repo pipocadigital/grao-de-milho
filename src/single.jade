@@ -1,25 +1,18 @@
 //- header
 - include('header.php');
+- the_post();
     
   div( class="container content-page" )
     div( class="container-fluid" )
       div( class="row" )
         div( class="col-xs-8" )
-          h1( class="title" ) Title single
+          h1( class="title" )
+            - the_title();
           
           div( class="content" )
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            - the_content();
         
-          div( class="share" )
-            a( href="https://www.facebook.com/sharer/sharer.php?u=[URL]" class="item item-facebook fa fa-facebook" )
-            a( href="https://twitter.com/share?url=[URL]&amp;text=[TITLE]&amp;via=[USER]" class="item item-twitter fa fa-twitter" )
-            a( href="https://plus.google.com/share?url=[LINK]" class="item item-google-plus fa fa-google-plus" )
-            a( href="https://www.linkedin.com/shareArticle?mini=true&url=[URL]" class="item item-linkedin fa fa-linkedin" )
-            a( href="https://www.pinterest.com/pin/create/button/?url=[URL]" class="item item-pinterest fa fa-pinterest" )
-            a( href="http://www.tumblr.com/share/link?url=[URL]" class="item item-tumblr fa fa-tumblr" )
+          - echo do_shortcode('[share_buttons]');
         
         div( class="col-xs-4" )
           //- sidebar

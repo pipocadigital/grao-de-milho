@@ -5,27 +5,47 @@
     div( class="container" )
       h1( class="title" ) Grão de Milho <span class="heart fa fa-heart"></span> Pipoca Starter
       h3( class="subtitle" ) Um boilerplate pronto para você iniciar seu projeto wordpress!
+      
+      nav( class="sociais" )
+        - if($url_facebook):
+          a( href!=echo('url_facebook') class="item item-facebook fa fa-facebook" )
+        - endif; if($url_twitter):
+          a( href!=echo('url_twitter') class="item item-twitter fa fa-twitter" )
+        - endif; if($url_youtube):
+          a( href!=echo('url_youtube') class="item item-youtube fa fa-youtube" )
+        - endif; if($url_instagram):
+          a( href!=echo('url_instagram') class="item item-instagram fa fa-instagram" )
+        - endif; if($url_googlePlus):
+          a( href!=echo('url_googlePlus') class="item item-google-plus fa fa-google-plus" )
+        - endif; if($url_linkedin):
+          a( href!=echo('url_linkedin') class="item item-linkedin fa fa-linkedin" )
+        - endif; if($url_pinterest):
+          a( href!=echo('url_pinterest') class="item item-pinterest fa fa-pinterest" )
+        - endif; if($url_tumblr):
+          a( href!=echo('url_tumblr') class="item item-tumblr fa fa-tumblr" )
+        - endif;
   
-  div( class="features" )
-    div( class="container" )
-      div( class="row" )
-        div( class="col-xs-4" )
-          div( class="box-feature" )
-            span( class="icon fa fa-bolt" )
-            h4( class="title" ) Rápido Desenvolvimento
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Suscipit quia, iusto nisi nesciunt.consectetur adipisicing elit.
+  
+  
+  //- destaques
+  - $queryDetaques = new WP_Query( array( 'post_type' => 'destaques'));
+  - if ($queryDetaques->have_posts()):
+    div( class="features" )
+      div( class="container" )
+        div( class="row" )
+          - while ($queryDetaques->have_posts()) : $queryDetaques->the_post();
+            - $icone = get_post_meta($post->ID, 'wpcf-destaque-icone', true);
+            - $descricao = get_post_meta($post->ID, 'wpcf-destaque-descricao', true);
+            div( class="col-xs-4" )
+              div( class="box-feature" )
+                span( class!=echo('icone') + " icon fa" )
+                h4( class="title" )
+                  - the_title();
+                - echo $descricao;
+          - endwhile;
+  - endif; wp_reset_query();
+          
         
-        div( class="col-xs-4" )
-          div( class="box-feature" )
-            span( class="icon fa fa-code" )
-            h4( class="title" ) Fácil de se Trabalhar
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Est, maxime ea, excepturi sint. consectetur adipisicing elit.
-        
-        div( class="col-xs-4" )
-          div( class="box-feature" )
-            span( class="icon fa fa-wordpress" )
-            h4( class="title" ) Estrutura WordPress
-            p Lorem ipsum dolor sit amet, consectetur adipisicing elit Sit enim id ex qui neque rerum. consectetur adipisicing elit.
   
     
 //- footer
