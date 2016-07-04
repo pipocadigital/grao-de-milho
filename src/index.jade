@@ -35,13 +35,12 @@
         div( class="row" )
           - while ($queryDetaques->have_posts()) : $queryDetaques->the_post();
             - $icone = get_post_meta($post->ID, 'wpcf-destaque-icone', true);
-            - $descricao = get_post_meta($post->ID, 'wpcf-destaque-descricao', true);
             div( class="col-xs-4" )
               div( class="box-feature" )
                 span( class!=echo('icone') + " icon fa" )
                 h4( class="title" )
                   - the_title();
-                - echo $descricao;
+                - the_excerpt();
           - endwhile;
   - endif; wp_reset_query();
 

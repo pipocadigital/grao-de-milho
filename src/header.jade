@@ -49,6 +49,12 @@ doctype html
   - echo "<body class='".$bodyClass."'>";
     
     header( class="main-header" )
+      div( class="search-top search--js" )
+        div( class="container" )
+          form( action="" )
+            label( for="" class="input input-search" )
+              input( type="search" name="s" placeholder="Digite aqui o que procura..." )
+          
       div( class="container" )
         figure( class="logo" )
           a( href!=echo('linkHome') )        
@@ -64,4 +70,6 @@ doctype html
                 'menu_class'     => 'nav navbar-nav'
               )
             )
+        button( class="button button-icon button-search button-search--js" )
+          i( class="fa fa-search" )
       
