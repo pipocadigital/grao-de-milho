@@ -16,8 +16,11 @@ gulp.task('pages', function(){
     .pipe(jade({
         pretty: !gulp.config.compressed,
         locals:{
-          echo:function(str){
-              return "<?php echo $"+str+"; ?>"
+          echo: function( str ) {
+            return "<?php echo $"+str+"; ?>"
+          },
+          php: function( str ) {
+            return "<?php $"+str+"; ?>"
           }
         }
     }))
