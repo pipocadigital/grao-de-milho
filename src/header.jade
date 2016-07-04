@@ -48,10 +48,13 @@ doctype html
   - $bodyClass = implode( " ", get_body_class() );
   - echo "<body class='".$bodyClass."'>";
     
-    header( class="header" )
+    header( class="main-header" )
       div( class="container" )
-        nav( class="menu" )
-          div( id="btn-menu" class="btn-menu" )
+        figure( class="logo" )
+          a( href!=echo('linkHome') )        
+            img( class="logo-image" src="http://www.marsled.com/media/logo/image/demo/loremipsum-logo.png" )
+        nav( class="main-menu" )
+          div( class="btn-menu btn-menu--js" )
             span
           -
             wp_nav_menu(
