@@ -12,10 +12,7 @@
     "url": "https://github.com/pipocadigital/grao-de-milho"
   },
   "scripts": {
-    "preinstall": "npm install -g bower",
-    "postinstall": "bash pipoca.sh",
     "start": "gulp",
-    "stop": "rm -rf node_modules",
     "lint": "./node_modules/.bin/jscs src && ./node_modules/.bin/jshint src",
     "fix": "./node_modules/.bin/jscs src --fix",
     "precommit": "npm run lint",
@@ -26,6 +23,7 @@
     "npm": "^2.7.0"
   },
   "devDependencies": {
+    "adm-zip": "^0.4.7",
     "bower": "^1.7.6",
     "browser-sync": "^2.11.1",
     "del": "^2.2.0",
