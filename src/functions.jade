@@ -79,4 +79,5 @@
 
   
   //- Includes
-  include('inc/customizer/customizer.php');
+  require_once( trailingslashit( TEMPLATEPATH ) . '/inc/customizer/customizer.php' );
+  require_once( trailingslashit( TEMPLATEPATH ) . '/types/custom-post-types.php' );
