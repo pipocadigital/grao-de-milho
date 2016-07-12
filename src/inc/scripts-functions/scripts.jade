@@ -1,0 +1,16 @@
+-
+
+//- Carregando scripts no wordpress
+function pipoca_scripts() {
+
+  //- Carregando CSS header
+  wp_enqueue_style( 'foundation', get_template_directory_uri() . '/assets/css/foundation.min.css' );
+  wp_enqueue_style( 'style', get_stylesheet_uri() );
+  
+  //- Carregando Scripts header
+  wp_enqueue_script('modernizr', get_template_directory_uri().'/assets/js/vendor/modernizr.js', array('jquery') );
+
+  //- Carregando no footer
+  wp_enqueue_script('function-js', get_template_directory_uri().'/assets/js/functions.js', array('jquery'), '', true );
+}
+add_action( 'wp_enqueue_scripts', 'pipoca_scripts' );

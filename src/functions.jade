@@ -1,0 +1,84 @@
+-
+  //- Add thumbnails
+  add_theme_support('post-thumbnails');
+  if(function_exists('add_theme_support')){
+    add_theme_support('post-thumbnails');
+  }
+  
+  
+  //- Add thumb custom size
+  add_image_size('350x200', 350, 200, true);
+  
+  
+  //- Remove width and height
+  add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
+  add_filter( 'image_send_to_editor', 'remove_width_attribute', 10 );
+  function remove_width_attribute( $html ) {
+    $html = preg_replace( '/(width|height)="\d*"\s/', "", $html );
+    return $html;
+  }
+  
+  
+  //- Add support custom menus
+  add_action( 'init', 'register_my_menu' );
+  function register_my_menu() {
+    register_nav_menus();
+  }
+  
+  
+  //- Remove WordPress Tags
+  remove_action('wp_head', 'wlwmanifest_link');
+  remove_action('wp_head', 'rsd_link');
+  remove_action('wp_head', 'wp_generator');
+
+  
+  //- Remove wordpress bar
+  add_filter( 'show_admin_bar', '__return_false' );
+  
+  
+  //- Add Shortcode
+  function share_buttons() {
+    $html = '<div class="share">
+      <a href="https://www.facebook.com/sharer/sharer.php?u='.get_permalink().'" class="item item-facebook fa fa-facebook"></a>
+      <a href="https://twitter.com/share?url='.get_permalink().'&amp;text='.get_the_title().'&amp;via=pmdb_rj" class="item item-twitter fa fa-twitter"></a>
+      <a href="https://plus.google.com/share?url='.get_permalink().'" class="item item-google-plus fa fa-google-plus"></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url='.get_permalink().'" class="item item-linkedin fa fa-linkedin"></a>
+      <a href="https://www.pinterest.com/pin/create/button/?url='.get_permalink().'" class="item item-pinterest fa fa-pinterest"></a>
+      <a href="http://www.tumblr.com/share/link?url='.get_permalink().'" class="item item-tumblr fa fa-tumblr"></a>
+    </div>';
+    return $html;
+  }
+  add_shortcode( 'share_buttons', 'share_buttons' );
+
+  //- Register sidebar
+  if ( function_exists('register_sidebar'))
+    register_sidebar(array(
+    'name' => 'Sidebar',
+    'before_widget' => '<div>',
+    'after_widget' => '</div>',
+    'before_title' => '<h2>',
+    'after_title' => '</h2>',
+  ));
+
+  //- Suport pagination
+  function base_pagination($pages = '', $range = 9) {  
+        global $wp_query, $wp_rewrite;  
+        $wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;  
+        $pagination = array(  
+            'base' => @add_query_arg('page','%#%'),  
+            'format' => '',
+            'total' => $wp_query->max_num_pages,  
+            'current' => $current,  
+            'show_all' => false,  
+            'type' => 'plain'  
+        );  
+        if ( $wp_rewrite->using_permalinks() ) $pagination['base'] = user_trailingslashit( trailingslashit( remove_query_arg( 's', get_pagenum_link( 1 ) ) ) . 'page/%#%/', 'paged' );  
+        if ( !empty($wp_query->query_vars['s']) ) $pagination['add_args'] = array( 's' => get_query_var( 's' ) );  
+        echo '<div class="posts_pagination">'.paginate_links( $pagination ).'</div>';
+  }
+
+  
+  //- Includes
+  require_once( trailingslashit( TEMPLATEPATH ) . '/inc/scripts-functions/scripts.php' );
+  require_once( trailingslashit( TEMPLATEPATH ) . '/inc/customizer/customizer.php' );
+  require_once( trailingslashit( TEMPLATEPATH ) . '/inc/types/types.php' );

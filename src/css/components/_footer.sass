@@ -17,7 +17,7 @@
         display: inline-block
         font-size: .9rem
         color: #FFF
-        +transition(350ms)
+        +transition( 350ms )
         &:hover
           padding-left: 5px
 
@@ -26,5 +26,12 @@
     padding: 10px
     font-size: .8rem
     text-align: center
-    color: rgba(#FFF, .5)
-    background-color: rgba(#FFF, .1)
+    color: rgba( #FFF, .5 )
+    background-color: rgba( #FFF, .1 )
+
+@media ( max-width: 1024px )
+  .footer
+    .container
+      padding-top: 30px
+    .box-footer
+      margin-top: 20px

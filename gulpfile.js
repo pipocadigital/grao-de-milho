@@ -2,12 +2,13 @@
 // --------------------------------------------------------- //
 var gulp            = require('gulp'),
     gulpsync        = require('gulp-sync')(gulp),
-    requireDir      = require('require-dir'),
-    packageJson     = require('./package.json');
+    requireDir      = require('require-dir');
 
 
 // Config & Paths
 // --------------------------------------------------------- //
+gulp.packageJson     = require('./package.json');
+
 gulp.config = {
   compressed: true,
   format: 'wordpress',
@@ -15,18 +16,18 @@ gulp.config = {
   port: '3001'
 };
 
-// Paths
-gulp.paths = {
+// Paths List
+gulp.pathsList = {
   default:
   {
     basePath: 'www/',
     scripts: 'src/js/**/*.js',
-    scriptsDest: 'www/js',
     styles: 'src/css/**/*.sass',
-    stylesDest: 'www/css',
     images: 'src/img/**/*.*',
-    imagesDest: 'www/img',
     pages: 'src/**/*.jade',
+    scriptsDest: 'www/js',
+    stylesDest: 'www/css',
+    imagesDest: 'www/img',
     pagesDest: 'www/',
     fontsDest: 'www/fonts',
   },
@@ -34,20 +35,28 @@ gulp.paths = {
   {
     basePath: 'wordpress/',
     scripts: 'src/js/**/*.js',
-    scriptsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/js',
     styles: 'src/css/**/*.sass',
-    stylesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/css',
     images: 'src/img/**/*.*',
-    imagesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/img',
     pages: 'src/**/*.jade',
-    pagesDest: 'wordpress/wp-content/themes/'+packageJson.name,
-    fontsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/fonts'
+    scriptsDest: function() {
+      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/js';
+    }(),
+    stylesDest: function() {
+      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/css';
+    }(),
+    imagesDest: function() {
+      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/img';
+    }(),
+    pagesDest: function() {
+      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name;
+    }(),
+    fontsDest: function() {
+      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/fonts';
+    }()
   }
 };
 
-gulp.paths = gulp.paths[gulp.config.format];
-
-
+gulp.paths = gulp.pathsList[ gulp.config.format ];
 
 // Tasks
 // --------------------------------------------------------- //
@@ -81,5 +90,14 @@ gulp.task('build', gulpsync.sync([
   'pages',
   'images',
   'libs'
+  ])
+);
+
+// Init
+gulp.task( 'init', gulpsync.sync([
+  'helpers',
+  'wp-install',
+  'config',
+  'default'
   ])
 );

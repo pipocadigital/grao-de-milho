@@ -1,6 +1,9 @@
-.menu
+.main-menu
   display: flex
   align-items: center
+  min-width: 70%
+  z-index: 10
+
   .navbar-nav
     display: inline-block
     list-style: none
@@ -28,6 +31,25 @@
           border-left: 13px solid transparent
           border-right: 13px solid transparent
           border-top: 8px solid #000
+      .sub-menu
+        position: absolute
+        display: none
+        background-color: #d7d7d7
+
+        .sub-menu
+          left: 100%
+          top: 0
+          display: none
+      &:hover,
+      &.active
+        & >.sub-menu
+          display: block
+          min-width: 200px
+          .menu-item
+            position: relative
+            width: 100%
+
+
 
 
   // btn menu
@@ -59,7 +81,7 @@
       transform: translateY(-50%)
 
 .menu-open
-  .menu
+  .main-menu
     .btn-menu
       span
         opacity: 0
@@ -76,15 +98,27 @@
 
 
 @media ( max-width: 800px)
-  .menu
+  .main-menu
     flex-direction: column
     align-items: flex-start
+    min-width: 30px
     .btn-menu
       display: block
     .navbar-nav
       display: none
       width: 100%
       padding-bottom: 10px
+      position: absolute
+      left: 0
+      top: 100%
       .menu-item
         display: block
         width: 100%
+        background-color: #d7d7d7
+
+        .sub-menu
+          position: relative
+          .sub-menu
+            left: 0
+            top: 0
+            padding: 0 10px

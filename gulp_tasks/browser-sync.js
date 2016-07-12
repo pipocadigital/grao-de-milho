@@ -4,10 +4,10 @@ var gulp            = require('gulp'),
 
 
 // Browser Sync
-gulp.task('browser-sync', function() {
+gulp.task( 'browser-sync', function() {
   browserSync({
     server: {
-       baseDir: gulp.paths.pagesDest
+       baseDir: gulp.paths.basePath
     }
   });
 });
