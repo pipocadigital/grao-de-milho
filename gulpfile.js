@@ -40,19 +40,19 @@ gulp.pathsList = {
     pages: 'src/**/*.jade',
     scriptsDest: function() {
       return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/js';
-    },
+    }(),
     stylesDest: function() {
       return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/css';
-    },
+    }(),
     imagesDest: function() {
       return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/img';
-    },
+    }(),
     pagesDest: function() {
       return 'wordpress/wp-content/themes/'+ gulp.packageJson.name;
-    },
+    }(),
     fontsDest: function() {
       return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/fonts';
-    }
+    }()
   }
 };
 
@@ -97,6 +97,7 @@ gulp.task('build', gulpsync.sync([
 gulp.task( 'init', gulpsync.sync([
   'helpers',
   'wp-install',
-  'config'
+  'config',
+  'default'
   ])
 );
