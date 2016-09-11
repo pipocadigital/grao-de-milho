@@ -22,21 +22,36 @@ gulp.task( 'helpers', function() {
     return str;
   }
 
-  helpers.fileExists = function( filePath ) {
+  helpers.fileExists = function(filePath) {
     try {
-      return fs.statSync( filePath ).isFile();
-    } catch ( err ) {
+      return fs.statSync(filePath).isFile();
+    } catch (err) {
       return false;
     }
   }
 
-  //helpers.console = function( message, type ) {
-  //  types = {
-  //    danger: '\x1b[31m',
-  //    success: '\x1b[31m'
-  //  }
-  //  console.log( '\x1b[31m', message ,'\x1b[0m' );
-  //}
+  helpers.log = function( message, type ) {
+    var hour = new Date().toTimeString().split(' ')[0],
+        color = '',
+        log = '';
+
+    switch (type) {
+      case 'danger':
+        color = '\x1b[31m';
+        break;
+      case 'success':
+        color = '\x1b[32m';
+        break;
+      default:
+        color = '\x1b[34m';
+    }
+
+    log += '[\x1b[90m'+hour+'\x1b[0m] >> ';
+    log += color;
+    log += message;
+    log += '\x1b[0m';
+    console.log( log );
+  }
 
   gulp.helpers = helpers;
 
