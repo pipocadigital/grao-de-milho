@@ -1,21 +1,15 @@
-var gulp            = require( 'gulp' ),
-    plumber         = require( 'gulp-plumber' ),
-    sass            = require( 'gulp-sass' ),
-    rename          = require( 'gulp-rename' ),
-    autoprefixer    = require( 'gulp-autoprefixer' ),
-    browserSync     = require( 'browser-sync' );
+var gulp            = require('gulp'),
+    plumber         = require('gulp-plumber'),
+    sass            = require('gulp-sass'),
+    rename          = require('gulp-rename'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    browserSync     = require('browser-sync');
 
 
 
 // Styles
 gulp.task('styles', function(){
-
-  // Wp theme style
-  if(gulp.config.format === 'wordpress'){
-    gulp.src(['src/*.css']).pipe(gulp.dest(gulp.paths.pagesDest));
-  }
-
-  return gulp.src([gulp.paths.styles])
+  return gulp.src(gulp.paths.styles)
     .pipe(plumber({
       errorHandler: function (error) {
         console.log(error.message);

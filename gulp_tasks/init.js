@@ -5,18 +5,17 @@ var gulp            = require( 'gulp' ),
     fileUrl         = 'https://wordpress.org/latest.zip',
     output          = 'latest.zip';
 
-
-
-
-// Replace Bower and Package.json
-gulp.task( 'config', function() {
+// Init
+gulp.task( 'init', function() {
 
   console.log( '\x1b[32m', 'Config package.json' ,'\x1b[0m' );
-  fileUrl = './package.json';
+  var fileUrl     = './package.json',
+      packageJson = gulp.config.packageJson;
+
   fs.readFile( fileUrl, 'utf8', function( err, data ) {
     if ( err ) return console.log( err );
-    var versionRegex = new RegExp('"version": "'+ gulp.packageJson.version +'"', 'g' );
-    data = data.replace( /grao-de-milho/g, gulp.packageJson.name );
+    var versionRegex = new RegExp('"version": "'+ packageJson.version +'"', 'g' );
+    data = data.replace( /grao-de-milho/g, packageJson.name );
     data = data.replace( versionRegex, '"version": "0.0.0"' )
 
     fs.writeFile(fileUrl, data, 'utf8', function (err) {
@@ -31,7 +30,7 @@ gulp.task( 'config', function() {
          fs.readFile( fileUrl, 'utf8', function( err, data ) {
 
            if (err) console.log( err );
-           var result = data.replace( /grao-de-milho/g, gulp.packageJson.name );
+           var result = data.replace( /grao-de-milho/g, packageJson.name );
 
            fs.writeFile( fileUrl, data, 'utf8', function( err ) {
 

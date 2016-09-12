@@ -2,67 +2,63 @@
 // --------------------------------------------------------- //
 var gulp            = require('gulp'),
     gulpsync        = require('gulp-sync')(gulp),
-    requireDir      = require('require-dir');
+    requireDir      = require('require-dir'),
+    packageJson     = require('./package.json');
 
 
 // Config & Paths
 // --------------------------------------------------------- //
-gulp.packageJson     = require('./package.json');
-
 gulp.config = {
   compressed: true,
   format: 'wordpress',
-  localhost: '127.0.0.1',
-  port: '3001'
+  localhost: 'localhost',
+  port: '3000',
+  packageJson: packageJson
 };
 
-// Paths List
-gulp.pathsList = {
+// Paths
+gulp.paths = {
   default:
   {
     basePath: 'www/',
-    scripts: 'src/js/**/*.js',
-    styles: 'src/css/**/*.sass',
-    images: 'src/img/**/*.*',
-    pages: 'src/**/*.jade',
+    scripts:  'src/js/**/*.js',
     scriptsDest: 'www/js',
+    styles: 'src/css/**/*.sass',
     stylesDest: 'www/css',
-    imagesDest: 'www/img',
+    images: 'src/images/**/*.*',
+    imagesDest: 'www/images',
+    pages: 'src/**/*.php',
     pagesDest: 'www/',
-    fontsDest: 'www/fonts',
+    fonts: 'src/fonts/**/*.*',
+    fontsDest: 'www/fonts'
   },
   wordpress:
   {
     basePath: 'wordpress/',
     scripts: 'src/js/**/*.js',
+    scriptsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/js',
     styles: 'src/css/**/*.sass',
-    images: 'src/img/**/*.*',
-    pages: 'src/**/*.jade',
-    scriptsDest: function() {
-      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/js';
-    }(),
-    stylesDest: function() {
-      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/css';
-    }(),
-    imagesDest: function() {
-      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/img';
-    }(),
-    pagesDest: function() {
-      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name;
-    }(),
-    fontsDest: function() {
-      return 'wordpress/wp-content/themes/'+ gulp.packageJson.name +'/fonts';
-    }()
+    stylesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/css',
+    images: 'src/images/**/*.*',
+    imagesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/images',
+    pages: 'src/**/*.php',
+    pagesDest: 'wordpress/wp-content/themes/'+packageJson.name,
+    fonts: 'src/fonts/**/*.*',
+    fontsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/fonts',
+    pluginsWp: 'plugins/**/*.*',
+    styleWp: 'src/style.css',
+    configWp: 'wp-config.php'
+
   }
 };
 
-gulp.paths = gulp.pathsList[ gulp.config.format ];
+gulp.paths = gulp.paths[gulp.config.format];
+
 
 // Tasks
 // --------------------------------------------------------- //
 requireDir('gulp_tasks');
-
-
+gulp.start('helpers');
 
 // Watch
 // --------------------------------------------------------- //
@@ -71,33 +67,18 @@ gulp.task('watch',function(){
   gulp.watch(gulp.paths.scripts, ['scripts']);
   gulp.watch(gulp.paths.pages, ['pages']);
   gulp.watch(gulp.paths.images, ['images']);
-  gulp.task('reload');
+  gulp.watch(gulp.paths.fonts, ['fonts']);
+  gulp.watch(gulp.paths.fonts, ['fonts']);
 });
 
 // Default
-gulp.task('default', gulpsync.sync([
-  'build',
-  'watch',
-  'connect-sync'
-  ])
-);
+var defautTasks = ['build', 'watch', 'connect-sync'];
+gulp.task('default', gulpsync.sync(defautTasks));
+
+// Install wp
+var installWpTasks = ['wp-plugins', 'wp-files', 'wp-install'];
+gulp.task('wp', gulpsync.sync(installWpTasks));
 
 // Build
-gulp.task('build', gulpsync.sync([
-  'clean',
-  'styles',
-  'scripts',
-  'pages',
-  'images',
-  'libs'
-  ])
-);
-
-// Init
-gulp.task( 'init', gulpsync.sync([
-  'helpers',
-  'wp-install',
-  'config',
-  'default'
-  ])
-);
+var buildTasks = ['clean', 'styles', 'scripts', 'pages', 'images', 'fonts', 'libs'];
+gulp.task('build', gulpsync.sync(buildTasks));

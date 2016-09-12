@@ -10,31 +10,38 @@ var gulp            = require( 'gulp' ),
 
 // WP Install
 gulp.task( 'wp-install', function() {
-
-  var initialized = gulp.helpers.fileExists( './'+ gulp.pathsList.wordpress.basePath +'/index.php' ),
+  var helpers     = gulp.helpers,
+      packageJson = gulp.config.packageJson,
+      initialized = helpers.fileExists( './'+ gulp.paths.basePath +'/index.php' ),
       projectName = process.argv.splice( process.argv.indexOf( '--p' ) )[1];
 
-  if( !projectName ) {
+  if( initialized ) {
 
-    console.log( '\x1b[31m', 'Insert project name using gulp init --p "[Project Name]".' ,'\x1b[0m' );
-    console.log( '\x1b[31m', 'Stoping...' ,'\x1b[0m' );
+    helpers.log('Ops! Wordpress is already installed.', 'danger');
+    helpers.log('Stoping...', 'danger');
     process.exit();
 
-  } else if( initialized ) {
+  } else if(0 && !projectName && packageJson.name === 'grao-de-milho') {
 
-    console.log( '\x1b[31m', 'Ops! Wordpress is already installed.', '\x1b[0m' );
-    console.log( '\x1b[31m', 'Stoping...', '\x1b[0m' );
+    helpers.log('Insert project name using gulp init --p "[Project Name]".', 'danger');
+    helpers.log('Stoping...', 'danger');
     process.exit();
 
   } else {
+    var i = 0;  // dots counter
+    setInterval(function() {
+      process.stdout.clearLine();  // clear current text
+      process.stdout.cursorTo(0);  // move cursor to beginning of line
+      i = (i + 1) % 4;
+      var dots = new Array(i + 1).join(".");
+      process.stdout.write("Waiting" + dots);  // write text
+      helpers.log( 'Downloading wordpress'+dots);
+    }, 300);
 
-    console.log( '\x1b[32m', 'Downloading wordpress...' ,'\x1b[0m' );
-
-    gulp.packageJson.name = gulp.helpers.slugify( projectName );
-
+    packageJson.name = helpers.slugify( projectName );
 
     // Install WP
-    request({
+    var req = request({
         url: fileUrl,
         encoding: null
       }, function( err, resp, body ) {
@@ -48,6 +55,5 @@ gulp.task( 'wp-install', function() {
           fs.createReadStream( 'wp-config.php' ).pipe( fs.createWriteStream( './wordpress/wp-config.php' ) );
         });
       });
-
     }
 });
