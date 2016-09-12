@@ -1,28 +1,8 @@
-var gulp            = require( 'gulp' ),
-    fs              = require( 'fs' ),
-    helpers         = {};
+var fs = require('fs');
+var slugify = require('slugify');
 
-
-
-// Helpers
-gulp.task( 'helpers', function() {
-
-  helpers.slugify = function( str ) {
-    str = str.replace( /^\s+|\s+$/g, '' ); // trim
-    str = str.toLowerCase();
-    var from = 'àáäâèéëêìíïîòóöôùúüûñç·/_,:;';
-    var to   = 'aaaaeeeeiiiioooouuuunc------';
-
-    for (var i=0, l=from.length ; i<l ; i++ )
-      str = str.replace( new RegExp( from.charAt(i), 'g' ), to.charAt( i ) );
-
-    str = str.replace( /[^a-z0-9 -]/g, '' ) // remove invalid chars
-      .replace( /\s+/g, '-' ) // collapse whitespace and replace by -
-      .replace( /-+/g, '-' ); // collapse dashes
-    return str;
-  }
-
-  helpers.fileExists = function(filePath) {
+function helpers() {
+  function fileExists(filePath) {
     try {
       return fs.statSync(filePath).isFile();
     } catch (err) {
@@ -30,8 +10,9 @@ gulp.task( 'helpers', function() {
     }
   }
 
-  helpers.log = function( message, type ) {
-    var hour = new Date().toTimeString().split(' ')[0],
+  function log(message, type) {
+    var date = new Date().toTimeString().split(' ')[0],
+    		dateFormated = '[\x1b[90m' + date + '\x1b[0m] >> ';
         color = '',
         log = '';
 
@@ -46,13 +27,69 @@ gulp.task( 'helpers', function() {
         color = '\x1b[34m';
     }
 
-    log += '[\x1b[90m'+hour+'\x1b[0m] >> ';
-    log += color;
-    log += message;
+    log += dateFormated + color + message;
     log += '\x1b[0m';
-    console.log( log );
+
+    console.log(log);
   }
 
-  gulp.helpers = helpers;
+  function rewriteProjectName(name) {
+	  var bowerJsonUrl = './bower.json';
+	  var packageJsonUrl = './package.json';
+	  var packageJson = require('.' + packageJsonUrl);
+	  var slug = slugify(name).toLowerCase();
+	  var that = this;
 
-});
+	  if (name == '') {
+	  	this.log('Please, give us a project name using the `--p` param.', 'danger');
+	  	process.exit();
+	  }
+
+	  this.log('Config package.json...', 'success');
+	  this.log('Config bower.json...', 'success');
+
+	  fs.readFile(packageJsonUrl, 'utf8', function(err, data) {
+	  	var versionRegex, newPackageContent;
+
+	    if (err) {
+	    	console.log(err, 'danger');
+	    	process.exit();
+	    }
+
+	    newPackageContent = JSON.parse(data);
+
+	    newPackageContent.version = '0.0.0';
+	    newPackageContent.name = slug;
+	    newPackageContent.title = name;
+	    newPackageContent.description = name;
+
+	    writeOn(packageJsonUrl, JSON.stringify(newPackageContent, null, '  '));
+	  });
+
+		fs.readFile(bowerJsonUrl, 'utf8', function(err, data) {
+			var newBowerFile;
+
+		 	if (err) {
+		 		that.log(err, 'danger');
+		 		process.exit();
+		 	}
+
+		 	writeOn(bowerJsonUrl, data.replace( /grao-de-milho/g, slug));
+		});
+  }
+
+  function writeOn(file, content) {
+  	var that = this;
+
+  	fs.writeFile(file, content, 'utf8', function(err) {
+	    if (err) {
+		 		that.log(err, 'danger');
+		 		process.exit();
+		 	}
+	 	});
+  }
+
+  return { slugify, fileExists, log, rewriteProjectName };
+};
+
+module.exports = helpers();
