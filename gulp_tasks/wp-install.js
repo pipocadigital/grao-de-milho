@@ -41,7 +41,7 @@ gulp.task('wp-install', function() {
         dbPass = readlineSync.question('[wp-config] DB password '),
         dbHost = readlineSync.question('[wp-config] DB host ');
 
-    helpers.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
+    helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
 
     helper.log('Downloading wordpress...', 'success');
 
