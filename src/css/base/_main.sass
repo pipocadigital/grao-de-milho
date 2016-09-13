@@ -1,7 +1,9 @@
+$margin-none-default: 0
+
 *,
 *:after,
 *:before
-	margin: 0
+	margin: $margin-none-default
 	padding: 0
 	outline: none
 	box-sizing: border-box
@@ -14,7 +16,7 @@ body
 
 .container
 	display: block
-	margin: 0 auto
+	margin: $margin-none-default auto
 	padding: 0 15px
 	width: 100%
 	max-width: $container-width
@@ -30,4 +32,4 @@ body
 			margin-top: 15px
 
 .none
-	display: none !important
+	display: none
