@@ -3,6 +3,7 @@ var gulp            = require('gulp'),
     sass            = require('gulp-sass'),
     rename          = require('gulp-rename'),
     autoprefixer    = require('gulp-autoprefixer'),
+    sourcemaps      = require('gulp-sourcemaps'),
     browserSync     = require('browser-sync');
 
 
@@ -15,9 +16,15 @@ gulp.task('styles', function(){
         console.log(error.message);
         this.emit('end');
     }}))
+    .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(rename({suffix: '.min'}))
     .pipe(autoprefixer(['last 2 versions', 'ie 8', 'ie 9', '> 1%']))
+    .pipe(sourcemaps.write('.', {
+      mapFile: function(mapFilePath) {
+        return mapFile.replace('.css.map', '.map');
+      }
+    }))
     .pipe(gulp.dest(gulp.paths.stylesDest))
     .pipe(browserSync.reload({stream:true}))
 });
