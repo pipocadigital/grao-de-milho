@@ -3,57 +3,82 @@ var gulp            = require( 'gulp' ),
     zlib            = require( 'zlib' ),
     fs              = require( 'fs' ),
     AdmZip          = require( 'adm-zip' ),
+    readlineSync    = require('readline-sync'),
     fileUrl         = 'https://wordpress.org/latest.zip',
     output          = 'latest.zip';
-
 
 
 // WP Install
 gulp.task( 'wp-install', function() {
   var helpers     = gulp.helpers,
       packageJson = gulp.config.packageJson,
-      initialized = helpers.fileExists( './'+ gulp.paths.basePath +'/index.php' ),
+      initialized = helpers.fileExists( './wordpress/index.php' );
       projectName = process.argv.splice( process.argv.indexOf( '--p' ) )[1];
 
-  if( initialized ) {
+  if( packageJson.name === 'grao-de-milho' ) {
 
-    helpers.log('Ops! Wordpress is already installed.', 'danger');
-    helpers.log('Stoping...', 'danger');
-    process.exit();
-
-  } else if(0 && !projectName && packageJson.name === 'grao-de-milho') {
-
-    helpers.log('Insert project name using gulp init --p "[Project Name]".', 'danger');
+    helpers.log('Set the project name using gulp init --p "[Project Name]".', 'danger');
     helpers.log('Stoping...', 'danger');
     process.exit();
 
   } else {
-    var i = 0;  // dots counter
-    setInterval(function() {
-      process.stdout.clearLine();  // clear current text
-      process.stdout.cursorTo(0);  // move cursor to beginning of line
-      i = (i + 1) % 4;
-      var dots = new Array(i + 1).join(".");
-      process.stdout.write("Waiting" + dots);  // write text
-      helpers.log( 'Downloading wordpress'+dots);
-    }, 300);
 
-    packageJson.name = helpers.slugify( projectName );
+    if(initialized) {
+      helpers.log('Ops! Wordpress is already installed.', 'danger');
+      var answer = readlineSync.question('Do you want to reinstall wordpress? (Y or N) ');
+      if(['N', 'NO'].indexOf(answer.toUpperCase()) >= 0) {
+        helpers.log('Stoping...', 'danger');
+        process.exit();
+      } else if(['Y', 'YES'].indexOf(answer.toUpperCase()) < 0) {
+        helpers.log('Answer unexpected', 'danger');
+        helpers.log('Stoping...', 'danger');
+        process.exit();
+      }
+    }
+
+    var dbName = readlineSync.question('[wp-config] DB name '),
+        dbUser = readlineSync.question('[wp-config] DB user '),
+        dbPass = readlineSync.question('[wp-config] DB password '),
+        dbHost = readlineSync.question('[wp-config] DB host ');
+
+    updateWpConfig(dbName, dbUser, dbPass, dbHost);
+
+    helpers.log('Downloading wordpress...', 'success');
 
     // Install WP
     var req = request({
         url: fileUrl,
         encoding: null
-      }, function( err, resp, body ) {
-        if( err ) throw err;
-        fs.writeFile( output, body, function( err ) {
-          console.log( '\x1b[32m', 'Unzipping wordpress...' ,'\x1b[0m' );
-          var zip = new AdmZip( output );
+      }, function(err, resp, body) {
+        if(err) throw err;
+        fs.writeFile( output, body, function(err) {
+          helpers.log('Unzipping wordpress...', 'success');
+          var zip = new AdmZip(output);
           zip.extractAllTo( './' );
           fs.unlink( output );
-          console.log( '\x1b[32m', 'Coping wp-config...' ,'\x1b[0m' );
-          fs.createReadStream( 'wp-config.php' ).pipe( fs.createWriteStream( './wordpress/wp-config.php' ) );
+          helpers.log('Coping wp-config...', 'success');
+          fs.createReadStream('wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
+          gulp.start('wp-build');
         });
       });
     }
 });
+
+
+function updateWpConfig(name, user, pass, host) {
+  var fileUrl     = './wp-config.php';
+  fs.readFile( fileUrl, 'utf8', function( err, data ) {
+    if ( err ) return console.log( err );
+    data.replace(/database_name_here/g, name);
+    data.replace(/username_here/g, user);
+    data.replace(/password_here/g, pass);
+    data.replace(/host_here/g, host );
+
+    fs.writeFile(fileUrl, data, 'utf8', function (err) {
+       if( err ) {
+         return console.log( err );
+       }
+       console.log('successo');
+    });
+  });
+}
