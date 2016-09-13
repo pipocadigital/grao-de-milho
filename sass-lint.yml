@@ -27,9 +27,9 @@ rules:
     -
       style: uppercase
   indentation:
-    - 2
+    - 1
     -
-      size: 2
+      size: tab
   property-sort-order:
     - 1
     -

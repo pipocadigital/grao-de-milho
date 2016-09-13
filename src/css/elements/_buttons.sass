@@ -1,106 +1,103 @@
 .button
-  position: relative
-  display: inline-block
-  min-width: 120px
-  height: 35px
-  line-height: 35px
-  padding: 0 10px
-  font-size: .7rem
-  text-align: center
-  text-decoration: none
-  font-weight: normal
-  color: #FFFFFF
-  border: 1px solid $color-primary
-  background-color: $color-primary
-  cursor: pointer
-  appearance: none
-  transition: all 250ms linear
+	display: inline-block
+	position: relative
+	min-width: 120px
+	height: 35px
+	line-height: 35px
+	padding: 0 10px
+	font-size: .7rem
+	text-align: center
+	text-decoration: none
+	font-weight: normal
+	color: #FFF
+	border: 1px solid $color-primary
+	background-color: $color-primary
+	cursor: pointer
+	appearance: none
+	transition: all 250ms linear
 
-  // size
-  &.button-small
-    min-width: 90px
-    height: 25px
-    line-height: 25px
-    font-size: .6rem
-  &.button-large
-    min-width: 150px
-    height: 45px
-    line-height: 45px
-    font-size: .8rem
+	// size
+	&.button-small
+		min-width: 90px
+		height: 25px
+		line-height: 25px
+		font-size: .6rem
+	&.button-large
+		min-width: 150px
+		height: 45px
+		line-height: 45px
+		font-size: .8rem
 
+	// block
+	&.button-block
+		width: 100%
 
-  // block
-  &.button-block
-    width: 100%
+	// round
+	&.button-round
+		border-radius: 5px
+	&.button-round-full
+		border-radius: 100px
 
-  // round
-  &.button-round
-    border-radius: 5px
-  &.button-round-full
-    border-radius: 100px
+	// outline
+	&.button-outline
+		color: $color-primary
+		background: transparent
 
-  // outline
-  &.button-outline
-    color: $color-primary
-    background: transparent
+	// disabled
+	&.disabled,
+	&[disabled]
+		border-color: #CCC
+		background-color: #CCC
+		cursor: default
+		pointer-events: none
+		&.button-outline
+			color: #CCC
+			border-color: #CCC
+			background: transparent
 
-  // disabled
-  &.disabled,
-  &[disabled]
-    border-color: #CCCCCC
-    background-color: #CCCCCC
-    cursor: default
-    pointer-events: none
-    &.button-outline
-      color: #CCCCCC
-      border-color: #CCCCCC
-      background: transparent
+	&.icon-right,
+	&.icon-left
+		padding-left: 30px
+		.fa
+			position: absolute
+			left: 10px
+			top: 50%
+			transform: translateY(-50%)
+	&.icon-right
+		padding-left: 10px
+		padding-right: 30px
+		.fa
+			left: auto
+			right: 10px
 
+	&.button-icon
+		min-width: 40px
+		max-width: 40px
+		height: 40px
+		line-height: 40px
+		padding: 0
+		&.button-small
+			min-width: 30px
+			max-width: 30px
+			height: 30px
+			line-height: 30px
+		&.button-large
+			min-width: 50px
+			max-width: 50px
+			height: 50px
+			line-height: 50px
 
-  // colors
-  @each $section, $color in $colors
-    &.button-#{$section}
-      background-color: $color
-      border-color: $color
-      &.button-outline
-        color: $color
-        background: transparent
-      &:hover
-        border-color: darken($color, 9)
-        background-color: darken($color, 9)
-        &.button-outline
-          color: darken($color, 9)
-          background: transparent
-
-  // icons
-  &.button-icon
-    min-width: 40px
-    max-width: 40px
-    height: 40px
-    line-height: 40px
-    padding: 0
-    &.button-small
-      min-width: 30px
-      max-width: 30px
-      height: 30px
-      line-height: 30px
-    &.button-large
-      min-width: 50px
-      max-width: 50px
-      height: 50px
-      line-height: 50px
-
-  &.icon-right,
-  &.icon-left
-    padding-left: 30px
-    .fa
-      position: absolute
-      left: 10px
-      top: 50%
-      transform: translateY(-50%)
-  &.icon-right
-    padding-left: 10px
-    padding-right: 30px
-    .fa
-      left: auto
-      right: 10px
+// colors
+@each $section, $color in $colors
+	.button.button-#{$section}
+		background-color: $color
+		border-color: $color
+		&.button-outline
+			color: $color
+			background: transparent
+		&:hover
+			border-color: darken($color, 9)
+			background-color: darken($color, 9)
+			&.button-outline
+				color: darken($color, 9)
+				background: transparent
