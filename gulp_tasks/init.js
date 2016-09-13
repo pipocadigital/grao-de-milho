@@ -1,8 +1,8 @@
-var gulp   		= require('gulp');
-var helper 		= require('./helpers');
-var args 			= process.argv;
+var gulp   		= require('gulp'),
+    helper 		= require('./helpers'),
+    args 			= process.argv;
 
-
+// Init
 gulp.task('init', function() {
 	var projectName = '';
 	var projectNameIndex = args.indexOf('--p');

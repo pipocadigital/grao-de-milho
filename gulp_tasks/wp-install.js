@@ -8,7 +8,6 @@ var gulp            = require( 'gulp' ),
     fileUrl         = 'https://wordpress.org/latest.zip',
     output          = 'latest.zip';
 
-
 // WP Install
 gulp.task('wp-install', function() {
   var packageJson = gulp.config.packageJson,

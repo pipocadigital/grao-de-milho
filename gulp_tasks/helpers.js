@@ -1,6 +1,7 @@
-var fs = require('fs');
-var slugify = require('slugify');
+var fs      = require('fs'),
+    slugify = require('slugify');
 
+// Helpers
 function helpers() {
   function fileExists(filePath) {
     try {

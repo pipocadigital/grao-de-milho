@@ -1,7 +1,8 @@
 node_modules
 www/
 src/libs
-wordpress
+wordpress/
+linters/
 
 .DS_Store
 .ftppass

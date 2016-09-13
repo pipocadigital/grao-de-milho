@@ -4,8 +4,6 @@ var gulp            = require('gulp'),
     imagemin        = require('gulp-imagemin'),
     browserSync     = require('browser-sync');
 
-
-
 // Images
 gulp.task('images', function(){
   console.log('Images');

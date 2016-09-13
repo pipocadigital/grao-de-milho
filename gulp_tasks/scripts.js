@@ -6,8 +6,6 @@ var gulp            = require('gulp'),
     sourcemaps      = require('gulp-sourcemaps'),
     browserSync     = require('browser-sync');
 
-
-
 // Scripts
 gulp.task('scripts', function(){
   return gulp.src(gulp.paths.scripts)

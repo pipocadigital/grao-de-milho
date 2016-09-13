@@ -1,8 +1,6 @@
 var gulp            = require('gulp'),
     plumber         = require('gulp-plumber');
 
-
-
 // WP Files
 gulp.task('wp-build', function() {
     gulp.src([gulp.paths.pluginsWp])

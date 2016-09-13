@@ -9,8 +9,6 @@ var gulp            = require('gulp'),
     flatten         = require('gulp-flatten'),
     browserSync     = require('browser-sync');
 
-
-
 // Libs
 gulp.task('libs', function() {
 

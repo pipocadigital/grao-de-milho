@@ -11,6 +11,7 @@
     "node": "^4.2.2",
     "npm": "^2.7.0"
   },
+  "sasslintConfig": "sass-lint.yml",
   "devDependencies": {
     "adm-zip": "^0.4.7",
     "bower": "^1.7.6",
@@ -29,6 +30,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
+    "gulp-sass-lint": "^1.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-sync": "^0.1.4",
     "gulp-uglify": "^1.5.3",
