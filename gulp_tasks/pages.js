@@ -1,9 +1,7 @@
 var gulp            = require('gulp'),
     plumber         = require('gulp-plumber'),
     browserSync     = require('browser-sync');
-
-
-
+    
 // Pages
 gulp.task('pages', function(){
 

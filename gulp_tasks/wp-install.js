@@ -3,51 +3,81 @@ var gulp            = require( 'gulp' ),
     zlib            = require( 'zlib' ),
     fs              = require( 'fs' ),
     AdmZip          = require( 'adm-zip' ),
+    readlineSync    = require('readline-sync'),
+    helper 		      = require('./helpers'),
     fileUrl         = 'https://wordpress.org/latest.zip',
     output          = 'latest.zip';
 
-
-
 // WP Install
-gulp.task( 'wp-install', function() {
-
-  var initialized = gulp.helpers.fileExists( './'+ gulp.pathsList.wordpress.basePath +'/index.php' ),
+gulp.task('wp-install', function() {
+  var packageJson = gulp.config.packageJson,
+      initialized = helper.fileExists( './wordpress/index.php' );
       projectName = process.argv.splice( process.argv.indexOf( '--p' ) )[1];
 
-  if( !projectName ) {
+  if( packageJson.name === 'grao-de-milho' ) {
 
-    console.log( '\x1b[31m', 'Insert project name using gulp init --p "[Project Name]".' ,'\x1b[0m' );
-    console.log( '\x1b[31m', 'Stoping...' ,'\x1b[0m' );
-    process.exit();
-
-  } else if( initialized ) {
-
-    console.log( '\x1b[31m', 'Ops! Wordpress is already installed.', '\x1b[0m' );
-    console.log( '\x1b[31m', 'Stoping...', '\x1b[0m' );
+    helper.log('Set the project name using gulp init --p "[Project Name]".', 'danger');
+    helper.log('Stoping...', 'danger');
     process.exit();
 
   } else {
 
-    console.log( '\x1b[32m', 'Downloading wordpress...' ,'\x1b[0m' );
+    if(initialized) {
+      helper.log('Ops! Wordpress is already installed.', 'danger');
+      var answer = readlineSync.question('Do you want to reinstall wordpress? (Y or N) ');
+      if(['N', 'NO'].indexOf(answer.toUpperCase()) >= 0) {
+        helper.log('Stoping...', 'danger');
+        process.exit();
+      } else if(['Y', 'YES'].indexOf(answer.toUpperCase()) < 0) {
+        helper.log('Answer unexpected', 'danger');
+        helper.log('Stoping...', 'danger');
+        process.exit();
+      }
+    }
 
-    gulp.packageJson.name = gulp.helpers.slugify( projectName );
+    var dbName = readlineSync.question('[wp-config] DB name '),
+        dbUser = readlineSync.question('[wp-config] DB user '),
+        dbPass = readlineSync.question('[wp-config] DB password '),
+        dbHost = readlineSync.question('[wp-config] DB host ');
 
+    helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
+
+    helper.log('Downloading wordpress...', 'success');
 
     // Install WP
-    request({
+    var req = request({
         url: fileUrl,
         encoding: null
-      }, function( err, resp, body ) {
-        if( err ) throw err;
-        fs.writeFile( output, body, function( err ) {
-          console.log( '\x1b[32m', 'Unzipping wordpress...' ,'\x1b[0m' );
-          var zip = new AdmZip( output );
+      }, function(err, resp, body) {
+        if(err) throw err;
+        fs.writeFile( output, body, function(err) {
+          helper.log('Unzipping wordpress...', 'success');
+          var zip = new AdmZip(output);
           zip.extractAllTo( './' );
           fs.unlink( output );
-          console.log( '\x1b[32m', 'Coping wp-config...' ,'\x1b[0m' );
-          fs.createReadStream( 'wp-config.php' ).pipe( fs.createWriteStream( './wordpress/wp-config.php' ) );
+          helper.log('Coping wp-config...', 'success');
+          fs.createReadStream('wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
+          gulp.start('wp-build');
         });
       });
-
     }
 });
+
+
+function updateWpConfig(name, user, pass, host) {
+  var fileUrl     = './wp-config.php';
+  fs.readFile( fileUrl, 'utf8', function( err, data ) {
+    if ( err ) return console.log( err );
+    data.replace(/database_name_here/g, name);
+    data.replace(/username_here/g, user);
+    data.replace(/password_here/g, pass);
+    data.replace(/host_here/g, host );
+
+    fs.writeFile(fileUrl, data, 'utf8', function (err) {
+       if( err ) {
+         return console.log( err );
+       }
+       console.log('successo');
+    });
+  });
+}
