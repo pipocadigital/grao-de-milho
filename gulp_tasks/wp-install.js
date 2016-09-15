@@ -41,6 +41,7 @@ gulp.task('wp-install', function() {
         dbHost = readlineSync.question('[wp-config] DB host ');
 
     helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
+    helper.updateWpStyle(packageJson.title);
 
     helper.log('Downloading wordpress...', 'success');
 
