@@ -35,59 +35,68 @@ function helpers() {
 	}
 
 	function rewriteProjectName(name) {
-		var bowerJsonUrl = './bower.json';
-		var packageJsonUrl = './package.json';
-		var packageJson = require('.' + packageJsonUrl);
-		var slug = slugify(name).toLowerCase();
-		var that = this;
-
-		if (name == '') {
+		if (name === '') {
 			this.log('Please, give us a project name using the `--p` param.', 'danger');
 			process.exit();
 		}
 
-		this.log('Config package.json...', 'success');
-		this.log('Config bower.json...', 'success');
+		this.updatePackageJson(name);
+		this.updateBowerJson(name);
+	}
 
-		fs.readFile(packageJsonUrl, 'utf8', function (err, data) {
-			var versionRegex, newPackageContent;
+	function updatePackageJson(name) {
+		var packageJsonFile = './package.json';
+		var slug = slugify(name).toLowerCase();
+		var that = this;
 
-			if (err) {
-				console.log(err, 'danger');
-				process.exit();
-			}
+		that.log('Configuring package.json', 'success');
 
-			newPackageContent = JSON.parse(data);
+		fs.readFile(packageJsonFile, 'utf8', function (err, data) {
+			var updatedPackageJson;
 
-			newPackageContent.version = '0.0.0';
-			newPackageContent.name = slug;
-			newPackageContent.title = name;
-			newPackageContent.description = name;
+			checkErrorsWhenIsReading(err);
 
-			writeOn(packageJsonUrl, JSON.stringify(newPackageContent, null, '  '));
+			updatedPackageJson = JSON.parse(data);
+
+			updatedPackageJson.version = '0.0.0';
+			updatedPackageJson.name = slug;
+			updatedPackageJson.title = name;
+			updatedPackageJson.description = name;
+
+			writeOn(packageJsonFile, JSON.stringify(updatedPackageJson, null, '  '));
 		});
+	}
 
-		fs.readFile(bowerJsonUrl, 'utf8', function (err, data) {
-			var newBowerFile;
+	function updateBowerJson(name) {
+		var bowerJsonFile = './bower.json';
+		var slug = slugify(name).toLowerCase();
 
-			if (err) {
-				that.log(err, 'danger');
-				process.exit();
-			}
+		this.log('Configuring bower.json', 'success');
 
-			writeOn(bowerJsonUrl, data.replace(/grao-de-milho/g, slug));
+		fs.readFile(bowerJsonFile, 'utf8', function (err, data) {
+			checkErrorsWhenIsReading(err);
+
+			writeOn(bowerJsonFile, data.replace(/grao-de-milho/g, slug));
 		});
+	}
+
+	function updateWpStyle(name) {
+		var wpStyleFile = './src/style.css';
+
+		if (fileExists(wpStyleFile)) {
+			fs.readFile(wpStyleFile, 'utf8', function (err, data) {
+				checkErrorsWhenIsReading(err);
+
+				writeOn(wpStyleFile, data.replace(/Grão de Milho/g, name));
+			});
+		}
 	}
 
 	function updateWpConfig(dbOptions) {
 		var wpConfigUrl = './wp-config.php';
-		var that = this;
 
 		fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
-			if (err) {
-				that.log(err, 'danger');
-				process.exit(1)
-			}
+			checkErrorsWhenIsReading(err);
 
 			data = data.replace(/database_name_here/g, dbOptions.name);
 			data = data.replace(/username_here/g, dbOptions.user);
@@ -99,17 +108,28 @@ function helpers() {
 	}
 
 	function writeOn(file, content) {
-		var that = this;
-
 		fs.writeFile(file, content, 'utf8', function (err) {
-			if (err) {
-				that.log(err, 'danger');
-				process.exit();
-			}
+			checkErrorsWhenIsReading(err);
 		});
 	}
 
-	return { slugify, fileExists, log, rewriteProjectName, updateWpConfig };
-};
+	function checkErrorsWhenIsReading(error) {
+		if (error) {
+			this.log(error, 'danger');
+			process.exit(1)
+		}
+	}
+
+	return {
+		slugify,
+		fileExists,
+		log,
+		rewriteProjectName,
+		updateWpConfig,
+		updatePackageJson,
+		updateBowerJson,
+		updateWpStyle
+	};
+}
 
 module.exports = helpers();

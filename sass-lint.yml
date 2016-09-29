@@ -3,9 +3,7 @@ options:
   # Don't merge default rules
   merge-default-rules: false
   # Set the formatter to 'html'
-  formatter: 'checkstyle'
-  # Output file instead of logging results
-  output-file: 'linters/sass-lint.html'
+  formatter: 'table'
 # Rule Configuration
 rules:
   extends-before-mixins: 2
@@ -34,12 +32,7 @@ rules:
     - 1
     -
       order:
+        - content
         - display
         - margin
       ignore-custom-properties: true
-  variable-for-property:
-    - 2
-    -
-      properties:
-        - margin
-        - content

@@ -35,12 +35,13 @@ gulp.task('wp-install', function() {
       }
     }
 
-    var dbName = readlineSync.question('[wp-config] DB name '),
-        dbUser = readlineSync.question('[wp-config] DB user '),
-        dbPass = readlineSync.question('[wp-config] DB password '),
-        dbHost = readlineSync.question('[wp-config] DB host ');
+    var dbName = readlineSync.question('[wp-config] DB name: '),
+        dbUser = readlineSync.question('[wp-config] DB user: '),
+        dbPass = readlineSync.question('[wp-config] DB password: '),
+        dbHost = readlineSync.question('[wp-config] DB host: ');
 
     helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
+    helper.updateWpStyle(packageJson.title);
 
     helper.log('Downloading wordpress...', 'success');
 
@@ -63,21 +64,3 @@ gulp.task('wp-install', function() {
     }
 });
 
-
-function updateWpConfig(name, user, pass, host) {
-  var fileUrl     = './wp-config.php';
-  fs.readFile( fileUrl, 'utf8', function( err, data ) {
-    if ( err ) return console.log( err );
-    data.replace(/database_name_here/g, name);
-    data.replace(/username_here/g, user);
-    data.replace(/password_here/g, pass);
-    data.replace(/host_here/g, host );
-
-    fs.writeFile(fileUrl, data, 'utf8', function (err) {
-       if( err ) {
-         return console.log( err );
-       }
-       console.log('successo');
-    });
-  });
-}

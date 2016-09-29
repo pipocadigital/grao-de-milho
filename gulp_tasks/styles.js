@@ -8,8 +8,7 @@ var gulp            = require('gulp'),
     browserSync     = require('browser-sync');
 
 // Styles
-gulp.task('styles', function(){
-
+gulp.task('styles', function() {
   return gulp.src(gulp.paths.styles)
     .pipe(plumber({
       errorHandler: function (error) {
