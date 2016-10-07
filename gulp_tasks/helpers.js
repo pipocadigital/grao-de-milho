@@ -1,5 +1,6 @@
 var fs      = require('fs'),
-    slugify = require('slugify');
+    slugify = require('slugify'),
+    request = require('request');
 
 // Helpers
 function helpers() {
@@ -107,6 +108,25 @@ function helpers() {
 		});
 	}
 
+	function updateWpKeys() {
+		var wpConfigUrl = './wordpress/wp-config.php',
+				url         = 'https://api.wordpress.org/secret-key/1.1/salt/';
+
+		this.log('Generating authentication keys', 'success');
+
+		request.get(url, function (err, response, body) {
+			checkErrorsWhenIsReading(err);
+
+			fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
+				checkErrorsWhenIsReading(err);
+
+				data = data.replace(/AUTHENTICATION_KEY/gi, body);
+
+				writeOn(wpConfigUrl, data);
+			});
+		});
+	}
+
 	function writeOn(file, content) {
 		fs.writeFile(file, content, 'utf8', function (err) {
 			checkErrorsWhenIsReading(err);
@@ -128,7 +148,8 @@ function helpers() {
 		updateWpConfig,
 		updatePackageJson,
 		updateBowerJson,
-		updateWpStyle
+		updateWpStyle,
+		updateWpKeys
 	};
 }
 

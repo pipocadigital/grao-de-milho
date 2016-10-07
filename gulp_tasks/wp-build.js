@@ -15,6 +15,7 @@ gulp.task('wp-build', function() {
 
   helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
   helper.updateWpStyle(packageJson.title);
+  helper.updateWpKeys();
 
 	del([gulpPaths.themesWp + '*', '!' + gulpPaths.themesWp + packageJson.name, '!' + gulpPaths.themesWp + 'index.php']);
 
