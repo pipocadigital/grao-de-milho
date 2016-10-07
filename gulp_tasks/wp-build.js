@@ -1,9 +1,18 @@
-var gulp            = require('gulp'),
-    plumber         = require('gulp-plumber');
+var gulp 		 = require('gulp'),
+		plumber  = require('gulp-plumber'),
+		del      = require('del');
 
 // WP Files
 gulp.task('wp-build', function() {
-	gulp.src([gulp.paths.pluginsWp])
+	var packageJson = gulp.config.packageJson,
+			gulpPaths   = gulp.paths;
+	del([
+		gulpPaths.themesWp + '*',
+		'!' + gulpPaths.themesWp + packageJson.name,
+		'!' + gulpPaths.themesWp + 'index.php'
+	]);
+
+	gulp.src([gulpPaths.pluginsWp])
 		.pipe(plumber({
 			errorHandler: function(error) {
 				console.log(error.message);
@@ -19,7 +28,7 @@ gulp.task('wp-build', function() {
 				this.emit('end');
 			}
 		}))
-		.pipe(gulp.dest(gulp.paths.basePath));
+		.pipe(gulp.dest(gulpPaths.basePath));
 
 	gulp.src('src/style.css')
 		.pipe(plumber({
@@ -28,5 +37,5 @@ gulp.task('wp-build', function() {
 				this.emit('end');
 			}
 		}))
-		.pipe(gulp.dest(gulp.paths.pagesDest));
+		.pipe(gulp.dest(gulpPaths.pagesDest));
 });
