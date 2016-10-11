@@ -1,5 +1,6 @@
 var fs      = require('fs'),
-    slugify = require('slugify');
+    slugify = require('slugify'),
+    request = require('request');
 
 // Helpers
 function helpers() {
@@ -93,7 +94,7 @@ function helpers() {
 	}
 
 	function updateWpConfig(dbOptions) {
-		var wpConfigUrl = './wp-config.php';
+		var wpConfigUrl = './wordpress/wp-config.php';
 
 		fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
 			checkErrorsWhenIsReading(err);
@@ -104,6 +105,25 @@ function helpers() {
 			data = data.replace(/host_here/g, dbOptions.host);
 
 			writeOn(wpConfigUrl, data);
+		});
+	}
+
+	function updateWpKeys() {
+		var wpConfigUrl = './wordpress/wp-config.php',
+				url         = 'https://api.wordpress.org/secret-key/1.1/salt/';
+
+		this.log('Generating authentication keys', 'success');
+
+		request.get(url, function (err, response, body) {
+			checkErrorsWhenIsReading(err);
+
+			fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
+				checkErrorsWhenIsReading(err);
+
+				data = data.replace(/AUTHENTICATION_KEY/gi, body);
+
+				writeOn(wpConfigUrl, data);
+			});
 		});
 	}
 
@@ -128,7 +148,8 @@ function helpers() {
 		updateWpConfig,
 		updatePackageJson,
 		updateBowerJson,
-		updateWpStyle
+		updateWpStyle,
+		updateWpKeys
 	};
 }
 

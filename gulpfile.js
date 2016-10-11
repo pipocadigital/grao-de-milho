@@ -46,6 +46,7 @@ gulp.paths = {
     fonts: 'src/fonts/**/*.*',
     fontsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/fonts',
     pluginsWp: 'plugins/**/*.*',
+    themesWp: 'wordpress/wp-content/themes/',
     styleWp: 'src/style.css',
     configWp: 'wp-config.php'
 
@@ -75,7 +76,7 @@ var defautTasks = ['build', 'watch', 'connect-sync'];
 gulp.task('default', gulpsync.sync(defautTasks));
 
 // Install wp
-var installWpTasks = ['wp-plugins', 'wp-files', 'wp-install'];
+var installWpTasks = ['wp-install'];
 gulp.task('wp', gulpsync.sync(installWpTasks));
 
 // Build

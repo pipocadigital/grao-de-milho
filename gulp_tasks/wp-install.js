@@ -35,14 +35,6 @@ gulp.task('wp-install', function() {
       }
     }
 
-    var dbName = readlineSync.question('[wp-config] DB name: '),
-        dbUser = readlineSync.question('[wp-config] DB user: '),
-        dbPass = readlineSync.question('[wp-config] DB password: '),
-        dbHost = readlineSync.question('[wp-config] DB host: ');
-
-    helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
-    helper.updateWpStyle(packageJson.title);
-
     helper.log('Downloading wordpress...', 'success');
 
     // Install WP
@@ -57,7 +49,7 @@ gulp.task('wp-install', function() {
           zip.extractAllTo( './' );
           fs.unlink( output );
           helper.log('Coping wp-config...', 'success');
-          fs.createReadStream('wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
+          fs.createReadStream('./wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
           gulp.start('wp-build');
         });
       });
