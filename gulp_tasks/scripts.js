@@ -27,7 +27,7 @@ gulp.task('scripts', function() {
 		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write('.', {
 			mapFile: function(mapFilePath) {
-				return mapFile.replace('.js.map', '.map');
+				return mapFilePath.replace('.js.map', '.map');
 			}
 		}))
 		.pipe(gulp.dest(gulp.paths.scriptsDest))

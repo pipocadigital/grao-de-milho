@@ -24,7 +24,7 @@ gulp.task('styles', function() {
     .pipe(autoprefixer(['last 2 versions', 'ie 8', 'ie 9', '> 1%']))
     .pipe(sourcemaps.write('.', {
       mapFile: function(mapFilePath) {
-        return mapFile.replace('.css.map', '.map');
+        return mapFilePath.replace('.css.map', '.map');
       }
     }))
     .pipe(gulp.dest(gulp.paths.stylesDest))
