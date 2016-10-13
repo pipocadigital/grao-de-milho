@@ -5,6 +5,7 @@ var gulp            = require('gulp'),
     concat          = require('gulp-concat'),
     sourcemaps      = require('gulp-sourcemaps'),
     jshint  	  	  = require('gulp-jshint'),
+    babel 					= require('gulp-babel'),
     browserSync  	  = require('browser-sync');
 
 // Scripts
@@ -18,10 +19,14 @@ gulp.task('scripts', function() {
 		}))
 		.pipe(jshint({
 			maxerr: 50,
-			jquery: '$'
+			jquery: '$',
+			esversion: 6
 		}))
 		.pipe(jshint.reporter('default'))
 		.pipe(sourcemaps.init())
+		.pipe(babel({
+			presets: ['es2015']
+		}))
 		.pipe(concat('main.js'))
 		.pipe(uglify())
 		.pipe(rename({suffix: '.min'}))
