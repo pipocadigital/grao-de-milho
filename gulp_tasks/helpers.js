@@ -94,9 +94,10 @@ function helpers() {
 	}
 
 	function updateWpConfig(dbOptions) {
+		var wpConfigDefaultUrl = './wp-config.php';
 		var wpConfigUrl = './wordpress/wp-config.php';
 
-		fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
+		fs.readFile(wpConfigDefaultUrl, 'utf8', function (err, data) {
 			checkErrorsWhenIsReading(err);
 
 			data = data.replace(/database_name_here/g, dbOptions.name);
