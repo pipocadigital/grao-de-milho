@@ -1,41 +1,93 @@
-<p align="center"><img width="600" src="http://i.giphy.com/3o6gEf38BrzrRYbDXi.gif"></p>
+<p align="center"><img width="480" src="http://i.giphy.com/3o6gEf38BrzrRYbDXi.gif"></p>
 
-> Um boilerplate desenvolvido para acelerar o desenvolvido de sites com [WordPress](https://br.wordpress.org) pelo time de desenvolvimento da [Pipoca Digital](http://www.pipocadigital.com.br/).
+An initiative of [Pipoca Digital](http://www.pipocadigital.com.br) to help those people who want to create Static or WordPress websites easily.
 
+## Table of contents
 
-### O que usamos
-- [Gulp](http://gulpjs.com/)
-- [Jade](http://jade-lang.com/)
-- [Sass](http://sass-lang.com/)
-- [Bower](https://bower.io/)
-- [BrowserSync](https://www.browsersync.io/)
+- [Highlights](#highlights)
+- [Getting started](#getting-started)
+- [Technologies](#technologies)
+- [Structure](#structure)
+- [How it works?](#how-it-works)
+- [Tasks](#tasks)
+- [License](#license)
 
+### Highlights
+- Simple
+- Free
+- Fast
+- Easy for begginers
+- Uses cool stuff such as JS, Sass and Gulp
 
-### Instalação
-Vamos instalar as dependencias de nosso projeto
-- [NodeJS](http://nodejs.org/)
-- [GulpJS](http://gulpjs.com/)
+### Getting started
+First of all, make sure you have installed the main dependencies:
 
-```sh
-# Clone o boilerplate
-$ git clone https://github.com/pipocadigital/grao-de-milho
-$ cd grao-de-milho
+- [Git](https://git-scm.com/downloads)
+- [NodeJS](https://nodejs.org/en/download/)
+- [Bower](https://bower.io/#install-bower)
+- [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#1-install-gulp-globally)
 
-# Instala as dependencias
+```bash
+# Clone it:
+$ git clone git@github.com:pipocadigital/grao-de-milho.git my-project-name
+
+# Then, go to the project's folder:
+$ cd my-project-name
+
+# Install your dependencies:
 $ npm install
+
+# Install the application’s dependencies:
+$ bower install
 ```
 
-### Estrutura
+Now, open your `gulpfile.js` and set the project type.
+
+1. `default`: You’ll work on a Front-end project. Gulp will create a `www` folder on your project’s root.
+2. `wordpress`: (Default) You’ll work on a WordPress project. Gulp will create a `wordpress` folder on your project’s root.
+When you run the commands below, the WordPress structure will be created, your theme will be named with your project name, etc.
+
+If you wanna more, you can also set it first as `default`, create all your front-end and then, change it to `wordpress`. It will works fine as well.
+
+```bash
+# Set your project name
+$ gulp init —p “My project”
+
+# If you're trying to work on a WordPress project, run:
+$ gulp wp
+
+# Then, run!
+$ gulp
 ```
-├── README.md
-├── bower.json
+
+Wait a few, and the last command will run a development server at `http://localhost:3000/`. It will open a new tab on your browser.
+
+### Technologies
+
+- NodeJS
+- Gulp
+- JS (ES6)
+- Sass
+- HTML5
+- WordPress
+
+
+### Structure
+
+If everything from the Getting Started section goes well, you should have this:
+
+```
 ├── gulpfile.js
+├── bower.json
 ├── package.json
+├── README.md
+├── www
+├── wordpress
 └── src
-    ├── img
-    │   └── {.jpg, .png, .svg, .gif, .ico}
     ├── js
-    │   ├── .js
+    │   ├── *.js
+    ├── images
+    │   └── {.jpg, .png, .svg, .gif, .ico}
     ├── css
     │   ├── components
     │   │   └── _component-name.sass
@@ -43,7 +95,7 @@ $ npm install
     │   │   └── _element-name.sass
     │   ├── pages
     │   │   └── page-name
-    │   │       └── _.sass
+    │   │       └── *.sass
     │   ├── settings
     │   │   ├── _base.sass
     │   │   ├── _colors.sass
@@ -52,24 +104,25 @@ $ npm install
     │   ├── tools
     │   │   └── _mixins.sass
     │   └── main.sass
-    ├── archive.jade
-    ├── category.jade
-    ├── examples.jade
-    ├── footer.jade
-    ├── functions.jade
-    ├── header.jade
-    ├── index.jade
-    ├── page.jade
-    ├── sidebar.jade
-    └── single.jade
+    ├── 404.php
+    ├── footer.php
+    ├── functions.php
+    ├── header.php
+    ├── index.php
+    ├── page.php
+    ├── search.php
+    └── style.css
 ```
 
-### Tasks do Gulp
-- `gulp`: Task default que executa todas as tasks, inicia um server e ativa o `watch` que executa na alterações dos arquivos
-- `gulp build`: Executa todas as tasks abaixo, preparando para fazer o deploy
-- `gulp pages`: Compila os arquivos .jade
-- `gulp styles`: Compila os arquivos .sass
-- `gulp scripts`: Verifica a qualidade dos arquivos js e minifica
-- `gulp images`: Minifica todas as imagens
-- `gulp libs`: Concatena todos os arquivos de dependencia gerenciados pelo bower
-- `gulp clean`: Limpa o /dist
+### How it works?
+
+Coming soon.
+
+
+### Tasks
+
+Coming soon.
+
+
+### License
+Grão de Milho is distributed under the [MIT License](#)
