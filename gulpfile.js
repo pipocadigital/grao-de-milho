@@ -9,11 +9,11 @@ var gulp            = require('gulp'),
 // Config & Paths
 // --------------------------------------------------------- //
 gulp.config = {
+  packageJson: packageJson,
   compressed: true,
-  format: 'wordpress',
+  format: packageJson.projectFormat ? packageJson.projectFormat : 'default',
   localhost: 'localhost',
-  port: '3000',
-  packageJson: packageJson
+  port: '3000'
 };
 
 // Paths
@@ -49,7 +49,6 @@ gulp.paths = {
     themesWp: 'wordpress/wp-content/themes/',
     styleWp: 'src/style.css',
     configWp: 'wp-config.php'
-
   }
 };
 

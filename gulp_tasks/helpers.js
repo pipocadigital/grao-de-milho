@@ -142,15 +142,16 @@ function helpers() {
 	}
 
 	return {
-		slugify,
-		fileExists,
-		log,
-		rewriteProjectName,
-		updateWpConfig,
-		updatePackageJson,
-		updateBowerJson,
-		updateWpStyle,
-		updateWpKeys
+		slugify: slugify,
+		fileExists: fileExists,
+		log: log,
+		writeOn: writeOn,
+		rewriteProjectName: rewriteProjectName,
+		updateWpConfig: updateWpConfig,
+		updatePackageJson: updatePackageJson,
+		updateBowerJson: updateBowerJson,
+		updateWpStyle: updateWpStyle,
+		updateWpKeys: updateWpKeys
 	};
 }
 

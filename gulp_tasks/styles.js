@@ -14,7 +14,8 @@ gulp.task('styles', function() {
       errorHandler: function (error) {
         console.log(error.message);
         this.emit('end');
-    }}))
+      }
+    }))
     .pipe(sassLint({configFile: 'sass-lint.yml'}))
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError())

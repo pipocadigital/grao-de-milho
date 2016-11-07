@@ -8,7 +8,7 @@ gulp.task('connect-sync', function() {
     port: gulp.config.port,
     base: gulp.paths.basePath,
     livereload: true
-    }, function (){
+  }, function (){
     browserSync({
       proxy: gulp.config.localhost+':'+gulp.config.port
     });
