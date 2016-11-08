@@ -8,8 +8,8 @@
     "url": ""
   },
   "engines": {
-    "node": "^4.2.2",
-    "npm": "^2.7.0"
+    "node": "^5.0.0",
+    "npm": "^3.4.1"
   },
   "sasslintConfig": "sass-lint.yml",
   "devDependencies": {
