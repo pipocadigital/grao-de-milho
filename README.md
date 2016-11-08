@@ -121,7 +121,37 @@ Coming soon.
 
 ### Tasks
 
-Coming soon.
+##### Featured...
+1. `gulp`:
+	- Runs `gulp build`;
+	- Creates a watcher;
+	- Creates a webserver and open your brower;
+2. `gulp init --p "Your project name"`: Renames the project;
+3. `gulp wp`: Alias for `gulp wp-install`
+4. `gulp build`: Run all the tasks below, except `wp-install and wp-build`.
+
+##### More...
+1. `gulp clean`: Remove all the files from generated directory;
+2. `gulp fonts`: Copy `fonts/` from source to generated directory;
+3. `gulp images`: Copy `images/` from source to generated directory;
+4. `gulp libs`: Get dependencies from brower, concat inside a only file and paste into the generated `scripts
+` directory;
+5. `gulp pages`: Copy all `.php` files from source to generated directory;
+6. `gulp scripts`: Check the quality of all `.js` files, apply babel2015 presets and copy the `js/` files from source to generated directory;
+7. `gulp styles`: Copy `styles/` from source to generated directory;
+8. `gulp wp-install`:
+	- Checks if the project has a name;
+	- It also checks if WordPress is already installed;
+	- If you confirm, it installs the latest version of WordPress;
+	- Runs `gulp wp-build`;
+
+9. `gulp wp-build`:
+	- Updates the DB configurations;
+	- Updates the authentication unique keys;
+	- Removes default themes from `wp-content/`;
+	- Copy files from `plugins/` to `wp-content/plugins/`;
+
+*Generated directory* could be: `www/` or `wordpress/`
 
 
 ### License
