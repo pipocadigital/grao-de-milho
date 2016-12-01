@@ -8,7 +8,6 @@ An initiative of [Pipoca Digital](http://www.pipocadigital.com.br) to help those
 - [Getting started](#getting-started)
 - [Technologies](#technologies)
 - [Structure](#structure)
-- [How it works?](#how-it-works)
 - [Tasks](#tasks)
 - [License](#license)
 
@@ -36,22 +35,29 @@ $ cd my-project-name
 
 # Install your dependencies:
 $ npm install
-
-# Install the application’s dependencies:
-$ bower install
 ```
 
-Now, open your `gulpfile.js` and set the project type.
+Now, set the project format.
+
+```js
+$ gulp set-format --n [<default|wordpress>]
+```
 
 1. `default`: You’ll work on a Front-end project. Gulp will create a `www` folder on your project’s root.
 2. `wordpress`: (Default) You’ll work on a WordPress project. Gulp will create a `wordpress` folder on your project’s root.
 When you run the commands below, the WordPress structure will be created, your theme will be named with your project name, etc.
 
-If you wanna more, you can also set it first as `default`, create all your front-end and then, change it to `wordpress`. It will works fine as well.
+For example:
+
+```js
+$ gulp set-format --n wordpress
+```
+
+If you wanna do more, you can also set it first as `default`, create all your front-end and then, change it to `wordpress`.
 
 ```bash
 # Set your project name
-$ gulp init —p “My project”
+$ gulp init --p “My project”
 
 # If you're trying to work on a WordPress project, run:
 $ gulp wp
@@ -84,39 +90,35 @@ If everything from the Getting Started section goes well, you should have this:
 ├── www
 ├── wordpress
 └── src
-    ├── js
-    │   ├── *.js
-    ├── images
-    │   └── {.jpg, .png, .svg, .gif, .ico}
-    ├── css
-    │   ├── components
-    │   │   └── _component-name.sass
-    │   ├── elements
-    │   │   └── _element-name.sass
-    │   ├── pages
-    │   │   └── page-name
-    │   │       └── *.sass
-    │   ├── settings
-    │   │   ├── _base.sass
-    │   │   ├── _colors.sass
-    │   │   ├── _measures.sass
-    │   │   └── _typography.sass
-    │   ├── tools
-    │   │   └── _mixins.sass
-    │   └── main.sass
-    ├── 404.php
-    ├── footer.php
-    ├── functions.php
-    ├── header.php
-    ├── index.php
-    ├── page.php
-    ├── search.php
-    └── style.css
+	├── js
+	│   ├── *.js
+	├── images
+	│   └── {.jpg, .png, .svg, .gif, .ico}
+	├── css
+	│   ├── components
+	│   │   └── _component-name.sass
+	│   ├── elements
+	│   │   └── _element-name.sass
+	│   ├── pages
+	│   │   └── page-name
+	│   │       └── *.sass
+	│   ├── settings
+	│   │   ├── _base.sass
+	│   │   ├── _colors.sass
+	│   │   ├── _measures.sass
+	│   │   └── _typography.sass
+	│   ├── tools
+	│   │   └── _mixins.sass
+	│   └── main.sass
+	├── 404.php
+	├── footer.php
+	├── functions.php
+	├── header.php
+	├── index.php
+	├── page.php
+	├── search.php
+	└── style.css
 ```
-
-### How it works?
-
-Coming soon.
 
 
 ### Tasks
@@ -139,6 +141,7 @@ Coming soon.
 5. `gulp pages`: Copy all `.php` files from source to generated directory;
 6. `gulp scripts`: Check the quality of all `.js` files, apply babel2015 presets and copy the `js/` files from source to generated directory;
 7. `gulp styles`: Copy `styles/` from source to generated directory;
+7. `gulp set-format --n "Project type"`: Set the project format
 8. `gulp wp-install`:
 	- Checks if the project has a name;
 	- It also checks if WordPress is already installed;
