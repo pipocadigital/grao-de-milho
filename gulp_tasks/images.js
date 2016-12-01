@@ -5,10 +5,13 @@ var gulp            = require('gulp'),
     browserSync     = require('browser-sync');
 
 // Images
-gulp.task('images', function(){
-  console.log('Images');
+gulp.task('images', function() {
   return gulp.src(gulp.paths.images)
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+    .pipe(cache(imagemin({
+    	optimizationLevel: 3,
+    	progressive: true,
+    	interlaced: true
+    })))
     .pipe(gulp.dest(gulp.paths.imagesDest))
     .pipe(browserSync.reload({stream:true}));
 });
