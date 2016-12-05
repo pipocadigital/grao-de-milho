@@ -1,83 +1,67 @@
-// Modules
-// --------------------------------------------------------- //
-var gulp            = require('gulp'),
-    gulpsync        = require('gulp-sync')(gulp),
-    requireDir      = require('require-dir'),
-    packageJson     = require('./package.json');
+const gulp = require('gulp');
+const gulpSync = require('gulp-sync')(gulp);
+const requireDir = require('require-dir');
+const packageJson = require('./package.json');
 
-
-// Config & Paths
-// --------------------------------------------------------- //
-gulp.config = {
-  packageJson: packageJson,
-  compressed: true,
-  format: packageJson.projectFormat ? packageJson.projectFormat : 'default',
-  localhost: 'localhost',
-  port: '3000'
+const baseConfig = {
+	port: '3000',
+	localhost: 'localhost',
+	packageJson: packageJson,
+	format: packageJson.projectFormat ? packageJson.projectFormat : 'default',
+	compressed: true
 };
 
-// Paths
-gulp.paths = {
-  default:
-  {
-    basePath: 'www/',
-    scripts:  'src/js/**/*.js',
-    scriptsDest: 'www/js',
-    styles: 'src/css/**/*.sass',
-    stylesDest: 'www/css',
-    images: 'src/images/**/*.*',
-    imagesDest: 'www/images',
-    pages: 'src/**/*.php',
-    pagesDest: 'www/',
-    fonts: 'src/fonts/**/*.*',
-    fontsDest: 'www/fonts'
-  },
-  wordpress:
-  {
-    basePath: 'wordpress/',
-    scripts: 'src/js/**/*.js',
-    scriptsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/js',
-    styles: 'src/css/**/*.sass',
-    stylesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/css',
-    images: 'src/images/**/*.*',
-    imagesDest: 'wordpress/wp-content/themes/'+packageJson.name+'/images',
-    pages: 'src/**/*.php',
-    pagesDest: 'wordpress/wp-content/themes/'+packageJson.name,
-    fonts: 'src/fonts/**/*.*',
-    fontsDest: 'wordpress/wp-content/themes/'+packageJson.name+'/fonts',
-    pluginsWp: 'plugins/**/*.*',
-    themesWp: 'wordpress/wp-content/themes/',
-    styleWp: 'src/style.css',
-    configWp: 'wp-config.php'
-  }
+const wpThemePath = 'wordpress/wp-content/themes/' + packageJson.name;
+const paths = {
+	default: {
+		basePath: 'www/',
+		pagesDest: 'www/',
+		stylesDest: 'www/css',
+		fontsDest: 'www/fonts',
+		imagesDest: 'www/images',
+		scriptsDest: 'www/js'
+	},
+	wordpress: {
+		basePath: 'wordpress/',
+		pluginsWp: 'plugins/**/*.*',
+		styleWp: 'src/style.css',
+		configWp: 'wp-config.php',
+		pagesDest: wpThemePath,
+		fontsDest: wpThemePath + '/fonts',
+		imagesDest: wpThemePath + '/images',
+		stylesDest: wpThemePath + '/css',
+		scriptsDest: wpThemePath + '/js',
+		themesWp: 'wordpress/wp-content/themes/'
+	}
 };
 
-gulp.paths = gulp.paths[gulp.config.format];
+const devPaths = {
+	pages: 'src/**/*.php',
+	scripts: 'src/js/**/*.js',
+	styles: 'src/css/**/*.sass',
+	images: 'src/images/**/*.*',
+	fonts: 'src/fonts/**/*.*'
+};
 
+gulp.paths = Object.assign(devPaths, paths[baseConfig.format]);
+gulp.config = baseConfig;
 
-// Tasks
-// --------------------------------------------------------- //
+// Gulp tasks
 requireDir('gulp_tasks');
 
-// Watch
-// --------------------------------------------------------- //
-gulp.task('watch',function(){
-  gulp.watch(gulp.paths.styles, ['styles']);
-  gulp.watch(gulp.paths.scripts, ['scripts']);
-  gulp.watch(gulp.paths.pages, ['pages']);
-  gulp.watch(gulp.paths.images, ['images']);
-  gulp.watch(gulp.paths.fonts, ['fonts']);
-  gulp.watch(gulp.paths.fonts, ['fonts']);
+gulp.task('default', gulpSync.sync(['build', 'watch', 'connect-sync']));
+
+gulp.task('wp', gulpSync.sync(['wp-install']));
+
+gulp.task('build', gulpSync.sync([
+	'clean', 'styles', 'scripts', 'pages', 'images', 'fonts', 'libs'
+]));
+
+gulp.task('watch', function() {
+	gulp.watch(gulp.paths.styles, ['styles']);
+	gulp.watch(gulp.paths.scripts, ['scripts']);
+	gulp.watch(gulp.paths.pages, ['pages']);
+	gulp.watch(gulp.paths.images, ['images']);
+	gulp.watch(gulp.paths.fonts, ['fonts']);
+	gulp.watch(gulp.paths.fonts, ['fonts']);
 });
-
-// Default
-var defautTasks = ['build', 'watch', 'connect-sync'];
-gulp.task('default', gulpsync.sync(defautTasks));
-
-// Install wp
-var installWpTasks = ['wp-install'];
-gulp.task('wp', gulpsync.sync(installWpTasks));
-
-// Build
-var buildTasks = ['clean', 'styles', 'scripts', 'pages', 'images', 'fonts', 'libs'];
-gulp.task('build', gulpsync.sync(buildTasks));
