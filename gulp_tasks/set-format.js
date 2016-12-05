@@ -1,10 +1,10 @@
-var gulp = require('gulp'),
-    helper = require('./helpers'),
-    fs = require('fs'),
-    args = process.argv;
+const gulp = require('gulp');
+const helper = require('./helpers');
+const fs = require('fs');
+const args = process.argv;
 
 gulp.task('set-format', function() {
-	var packageJsonFile = './package.json';
+	const packageJsonFile = './package.json';
 
 	fs.readFile(packageJsonFile, 'utf8', function (error, data) {
 		var newFormat = '';
@@ -24,7 +24,7 @@ gulp.task('set-format', function() {
 
 			if (newFormat.length === 0 || (validParams.indexOf(newFormat[0]) === -1)) {
 				helper.log('Please, give us a valid project format using the `--n` param.', 'danger');
-				process.exit(1)
+				process.exit(1);
 			}
 
 			updatedPackageJson.projectFormat = newFormat[0];

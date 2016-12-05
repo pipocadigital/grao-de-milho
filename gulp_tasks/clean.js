@@ -1,7 +1,4 @@
-var gulp            = require('gulp'),
-    del             = require('del');
+const gulp = require('gulp');
+const del = require('del');
 
-// Clean
-gulp.task('clean', function() {
-  return del(gulp.paths.pagesDest);
-});
+gulp.task('clean', () => del(gulp.paths.pagesDest));
