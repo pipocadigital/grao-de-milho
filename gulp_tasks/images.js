@@ -1,7 +1,4 @@
 const gulp = require('gulp');
-const plumber = require('gulp-plumber');
-const cache = require('gulp-cache');
-const imagemin = require('gulp-imagemin');
 const browserSync = require('browser-sync');
 
 gulp.task('images', function() {

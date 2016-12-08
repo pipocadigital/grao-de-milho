@@ -7,7 +7,6 @@ const sourcemaps = require('gulp-sourcemaps');
 const sassLint = require('gulp-sass-lint');
 const browserSync = require('browser-sync');
 
-// Styles
 gulp.task('styles', function() {
 	return gulp.src(gulp.paths.styles)
 		.pipe(plumber({

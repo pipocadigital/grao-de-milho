@@ -4,7 +4,6 @@ const readlineSync = require('readline-sync');
 const helper = require('./helpers');
 const del = require('del');
 
-// WP Files
 gulp.task('wp-build', function() {
 	const dbName = readlineSync.question('[wp-config] DB name: ');
 	const dbUser = readlineSync.question('[wp-config] DB user: ');

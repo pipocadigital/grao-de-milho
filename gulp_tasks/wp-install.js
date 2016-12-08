@@ -1,15 +1,14 @@
-const gulp = require( 'gulp' );
-const request = require( 'request' );
-const zlib = require( 'zlib' );
-const fs = require( 'fs' );
-const AdmZip = require( 'adm-zip' );
+const gulp = require('gulp');
+const request = require('request');
+const zlib = require('zlib');
+const fs = require('fs');
+const AdmZip = require('adm-zip');
 const readlineSync = require('readline-sync');
 const helper = require('./helpers');
-const fileUrl = 'https://wordpress.org/latest.zip';
-const output = 'latest.zip';
 
-// WP Install
 gulp.task('wp-install', function() {
+	const wpLatestZip = 'https://wordpress.org/latest.zip';
+	const outputZip = 'latest.zip';
 	const packageJson = gulp.config.packageJson;
 	const wpIsInitialized = helper.fileExists('./wordpress/index.php');
 	const projectName = process.argv.splice(process.argv.indexOf('--p'))[1];
@@ -38,19 +37,19 @@ gulp.task('wp-install', function() {
 
 	// Download
 	request({
-		url: fileUrl,
+		url: wpLatestZip,
 		encoding: null
-	}, function(err, res, body) {
-		if(err) throw err;
+	}, function(reqError, response, body) {
+		if(reqError) throw reqError;
 
-		fs.writeFile(output, body, function(err) {
-			if(err) throw err;
+		fs.writeFile(outputZip, body, error => {
+			if(error) throw error;
 
 			helper.log('Unzipping wordpress...', 'success');
 
-			const zip = new AdmZip(output);
+			const zip = new AdmZip(outputZip);
 			zip.extractAllTo('./');
-			fs.unlink(output);
+			fs.unlink(outputZip);
 
 			helper.log('Coping wp-config...', 'success');
 			fs.createReadStream('./wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
