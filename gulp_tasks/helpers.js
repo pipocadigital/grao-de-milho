@@ -1,158 +1,153 @@
-var fs      = require('fs'),
-    slugify = require('slugify'),
-    request = require('request');
+// TODO: refactor this file ASAP.
+const fs = require('fs');
+const slugify = require('slugify');
+const request = require('request');
 
-// Helpers
-function helpers() {
-	function fileExists(filePath) {
-		try {
-			return fs.statSync(filePath).isFile();
-		} catch (err) {
-			return false;
-		}
+const wpStyleFile = './src/style.css';
+const wpConfigFile = './wp-config.php';
+const bowerJsonFile = './bower.json';
+const packageJsonFile = './package.json';
+
+function rewriteProjectName(name) {
+	if (name === '') {
+		log('Please, give us a project name using the `--p` param.', 'danger');
+		process.exit();
 	}
 
-	function log(message, type) {
-		var date = new Date().toTimeString().split(' ')[0];
-		var dateFormated = '[\x1b[90m' + date + '\x1b[0m] >> ';
-		var color = '';
-		var log = '';
+	updatePackageJson(name);
+	updateBowerJson(name);
+}
 
-		switch (type) {
-			case 'danger':
-				color = '\x1b[31m';
-				break;
-			case 'success':
-				color = '\x1b[32m';
-				break;
-			default:
-				color = '\x1b[34m';
-		}
+function updatePackageJson(name) {
+	const slug = getSlug(name);
 
-		log += dateFormated + color + message;
-		log += '\x1b[0m';
+	log('Configuring package.json...', 'success');
 
-		console.log(log);
-	}
+	fs.readFile(packageJsonFile, 'utf8', function (error, data) {
+		checkErrorsAndExit(error);
 
-	function rewriteProjectName(name) {
-		if (name === '') {
-			this.log('Please, give us a project name using the `--p` param.', 'danger');
-			process.exit();
-		}
+		const updatedPackageJson = JSON.parse(data);
+		updatedPackageJson.version = '0.0.0';
+		updatedPackageJson.name = slug;
+		updatedPackageJson.title = name;
+		updatedPackageJson.description = name;
 
-		this.updatePackageJson(name);
-		this.updateBowerJson(name);
-	}
+		writeOn(packageJsonFile, JSON.stringify(updatedPackageJson, null, '  '));
+	});
+}
 
-	function updatePackageJson(name) {
-		var packageJsonFile = './package.json';
-		var slug = slugify(name).toLowerCase();
-		var that = this;
+function updateBowerJson(name) {
+	const slug = getSlug(name);
 
-		that.log('Configuring package.json', 'success');
+	log('Configuring bower.json', 'success');
 
-		fs.readFile(packageJsonFile, 'utf8', function (err, data) {
-			var updatedPackageJson;
+	fs.readFile(bowerJsonFile, 'utf8', function (error, data) {
+		checkErrorsAndExit(error);
 
-			checkErrorsWhenIsReading(err);
+		writeOn(bowerJsonFile, data.replace(/grao-de-milho/g, slug));
+	});
+}
 
-			updatedPackageJson = JSON.parse(data);
+function updateWpStyle(name) {
+	if (fileExists(wpStyleFile)) {
+		fs.readFile(wpStyleFile, 'utf8', function (error, data) {
+			checkErrorsAndExit(error);
 
-			updatedPackageJson.version = '0.0.0';
-			updatedPackageJson.name = slug;
-			updatedPackageJson.title = name;
-			updatedPackageJson.description = name;
-
-			writeOn(packageJsonFile, JSON.stringify(updatedPackageJson, null, '  '));
+			writeOn(wpStyleFile, data.replace(/Grão de Milho/g, name));
 		});
 	}
+}
 
-	function updateBowerJson(name) {
-		var bowerJsonFile = './bower.json';
-		var slug = slugify(name).toLowerCase();
+function updateWpConfig(dbOptions) {
+	fs.readFile(wpConfigFile, 'utf8', function (error, data) {
+		checkErrorsAndExit(error);
 
-		this.log('Configuring bower.json', 'success');
+		const newWpConfigFile = './wordpress/wp-config.php';
 
-		fs.readFile(bowerJsonFile, 'utf8', function (err, data) {
-			checkErrorsWhenIsReading(err);
+		data = data.replace(/database_name_here/g, dbOptions.name);
+		data = data.replace(/username_here/g, dbOptions.user);
+		data = data.replace(/password_here/g, dbOptions.pass);
+		data = data.replace(/host_here/g, dbOptions.host);
 
-			writeOn(bowerJsonFile, data.replace(/grao-de-milho/g, slug));
-		});
-	}
+		writeOn(newWpConfigFile, data);
+	});
+}
 
-	function updateWpStyle(name) {
-		var wpStyleFile = './src/style.css';
+function updateWpKeys() {
+	const secretKeyUrl = 'https://api.wordpress.org/secret-key/1.1/salt/';
 
-		if (fileExists(wpStyleFile)) {
-			fs.readFile(wpStyleFile, 'utf8', function (err, data) {
-				checkErrorsWhenIsReading(err);
+	log('Generating authentication keys', 'success');
 
-				writeOn(wpStyleFile, data.replace(/Grão de Milho/g, name));
-			});
-		}
-	}
+	request
+		.get(secretKeyUrl, function (error, response, body) {
+			checkErrorsAndExit(error);
 
-	function updateWpConfig(dbOptions) {
-		var wpConfigDefaultUrl = './wp-config.php';
-		var wpConfigUrl = './wordpress/wp-config.php';
-
-		fs.readFile(wpConfigDefaultUrl, 'utf8', function (err, data) {
-			checkErrorsWhenIsReading(err);
-
-			data = data.replace(/database_name_here/g, dbOptions.name);
-			data = data.replace(/username_here/g, dbOptions.user);
-			data = data.replace(/password_here/g, dbOptions.pass);
-			data = data.replace(/host_here/g, dbOptions.host);
-
-			writeOn(wpConfigUrl, data);
-		});
-	}
-
-	function updateWpKeys() {
-		var wpConfigUrl = './wordpress/wp-config.php',
-				url         = 'https://api.wordpress.org/secret-key/1.1/salt/';
-
-		this.log('Generating authentication keys', 'success');
-
-		request.get(url, function (err, response, body) {
-			checkErrorsWhenIsReading(err);
+			const wpConfigUrl = './wordpress/wp-config.php';
 
 			fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
-				checkErrorsWhenIsReading(err);
+				checkErrorsAndExit(err);
 
 				data = data.replace(/AUTHENTICATION_KEY/gi, body);
 
 				writeOn(wpConfigUrl, data);
 			});
 		});
-	}
-
-	function writeOn(file, content) {
-		fs.writeFile(file, content, 'utf8', function (err) {
-			checkErrorsWhenIsReading(err);
-		});
-	}
-
-	function checkErrorsWhenIsReading(error) {
-		if (error) {
-			this.log(error, 'danger');
-			process.exit(1)
-		}
-	}
-
-	return {
-		slugify: slugify,
-		fileExists: fileExists,
-		log: log,
-		writeOn: writeOn,
-		rewriteProjectName: rewriteProjectName,
-		updateWpConfig: updateWpConfig,
-		updatePackageJson: updatePackageJson,
-		updateBowerJson: updateBowerJson,
-		updateWpStyle: updateWpStyle,
-		updateWpKeys: updateWpKeys
-	};
 }
 
-module.exports = helpers();
+function getSlug(name) {
+	return slugify(name).toLowerCase();
+}
+
+function checkErrorsAndExit(error) {
+	if (error) {
+		log(error, 'danger');
+		process.exit(1)
+	}
+}
+
+function writeOn(file, content) {
+	fs.writeFile(file, content, 'utf8', err => checkErrorsAndExit(err));
+}
+
+function fileExists(filePath) {
+	try {
+		return fs.statSync(filePath).isFile();
+	} catch (err) {
+		// TODO: handle this
+		return false;
+	}
+}
+
+function log(message, type) {
+	const date = new Date().toTimeString();
+	const dateFormated = dateTermnialOutputFormat(date.split(' ')[0]);
+	const color = colorByAlertType(type);
+	const log = dateFormated + color + message + '\x1b[0m';
+
+	console.log(log);
+}
+
+function dateTermnialOutputFormat(date) {
+	return '[\x1b[90m' + date + '\x1b[0m] >> ';
+}
+
+function colorByAlertType(type) {
+	switch (type) {
+		case 'danger':
+			return '\x1b[31m';
+		case 'success':
+			return '\x1b[32m';
+		default:
+			return '\x1b[34m';
+	}
+}
+
+module.exports = {
+	log,
+	writeOn,
+	fileExists,
+	updateWpConfig,
+	rewriteProjectName,
+	updateWpStyle,
+	updateWpKeys
+};
