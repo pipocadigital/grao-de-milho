@@ -1,27 +1,26 @@
-var gulp 		 		 = require('gulp'),
-		plumber  		 = require('gulp-plumber'),
-		readlineSync = require('readline-sync'),
-		helper 		   = require('./helpers'),
-		del      		 = require('del');
+const gulp = require('gulp');
+const plumber = require('gulp-plumber');
+const readlineSync = require('readline-sync');
+const helper = require('./helpers');
+const del = require('del');
 
-// WP Files
 gulp.task('wp-build', function() {
-	var dbName 			= readlineSync.question('[wp-config] DB name: '),
-	    dbUser 			= readlineSync.question('[wp-config] DB user: '),
-	    dbPass 			= readlineSync.question('[wp-config] DB password: '),
-	    dbHost 			= readlineSync.question('[wp-config] DB host: '),
-			packageJson = gulp.config.packageJson,
-			gulpPaths   = gulp.paths;
+	const dbName = readlineSync.question('[wp-config] DB name: ');
+	const dbUser = readlineSync.question('[wp-config] DB user: ');
+	const dbPass = readlineSync.question('[wp-config] DB password: ');
+	const dbHost = readlineSync.question('[wp-config] DB host: ');
+	const packageJson = gulp.config.packageJson;
+	const gulpPaths = gulp.paths;
 
-  helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
-  helper.updateWpStyle(packageJson.title);
-  helper.updateWpKeys();
+	helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
+	helper.updateWpStyle(packageJson.title);
+	helper.updateWpKeys();
 
 	del([gulpPaths.themesWp + '*', '!' + gulpPaths.themesWp + packageJson.name, '!' + gulpPaths.themesWp + 'index.php']);
 
 	gulp.src([gulpPaths.pluginsWp])
 		.pipe(plumber({
-			errorHandler: function(error) {
+			errorHandler: error => {
 				console.log(error.message);
 				this.emit('end');
 			}
@@ -30,7 +29,7 @@ gulp.task('wp-build', function() {
 
 	gulp.src('src/style.css')
 		.pipe(plumber({
-			errorHandler: function(error) {
+			errorHandler: error => {
 				console.log(error.message);
 				this.emit('end');
 			}

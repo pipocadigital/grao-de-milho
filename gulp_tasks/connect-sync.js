@@ -1,16 +1,14 @@
-var gulp            = require('gulp'),
-    connect         = require('gulp-connect-php'),
-    browserSync     = require('browser-sync');
+const gulp = require('gulp');
+const connect = require('gulp-connect-php');
+const browserSync = require('browser-sync');
 
-// Connect Sync
 gulp.task('connect-sync', function() {
-  connect.server({
-    port: gulp.config.port,
-    base: gulp.paths.basePath,
-    livereload: true
-  }, function (){
-    browserSync({
-      proxy: gulp.config.localhost+':'+gulp.config.port
-    });
-  });
+	const proxy = gulp.config.localhost + ':' + gulp.config.port;
+	const serverConfig = {
+		base: gulp.paths.basePath,
+		port: gulp.config.port,
+		livereload: true
+	};
+
+	connect.server(serverConfig, () => browserSync({ proxy }));
 });
