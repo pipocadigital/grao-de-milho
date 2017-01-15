@@ -1,21 +1,25 @@
 .entry-content
 	$margin-content-imagem: 1.5em
-	$margin-none-default: 0
 
-	.alignleft,
-	img.alignleft
+	p
+		font-size: 1rem
+		& + p
+			margin-top: 15px
+
+	img.alignleft,
+	.alignleft
 		display: inline
 		margin-right: $margin-content-imagem
 		float: left
 
-	.alignright,
-	img.alignright
+	img.alignright,
+	.alignright
 		display: inline
 		margin-left: $margin-content-imagem
 		float: right
 
-	.aligncenter,
-	img.aligncenter
+	img.aligncenter,
+	.aligncenter
 		display: block
 		margin-right: auto
 		margin-left: auto
@@ -25,17 +29,19 @@
 		margin-bottom: $margin-content-imagem
 		text-align: center
 		padding-top: 5px
+
 		img
-			margin: $margin-none-default
+			margin: 0
 			padding: 0
 			border: 0 none
+
 		p.wp-caption-text
-			margin: $margin-none-default
+			margin: 0
 			line-height: 1.5
 			font-size: 10px
 
 	.wp-smiley
-		margin: $margin-none-default
+		margin: 0
 		max-height: 1em
 
 	blockquote
@@ -45,6 +51,7 @@
 			margin-left: 0
 			width: 33%
 			float: left
+
 		&.right
 			margin-left: 20px
 			text-align: left
