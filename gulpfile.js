@@ -47,7 +47,7 @@ gulp.paths = Object.assign(devPaths, paths[baseConfig.format]);
 gulp.config = baseConfig;
 
 // Gulp tasks
-requireDir('gulp_tasks');
+requireDir('tasks');
 
 gulp.task('default', gulpSync.sync(['build', 'watch', 'connect-sync']));
 
