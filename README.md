@@ -40,7 +40,7 @@ $ npm install
 Now, set the project format.
 
 ```js
-$ gulp set-format --n [<default|wordpress>]
+$ gulp set-format --name [<default|wordpress>]
 ```
 
 1. `default`: You’ll work on a Front-end project. Gulp will create a `www` folder on your project’s root.
@@ -50,7 +50,7 @@ When you run the commands below, the WordPress structure will be created, your t
 For example:
 
 ```js
-$ gulp set-format --n wordpress
+$ gulp set-format --name wordpress
 ```
 
 If you wanna do more, you can also set it first as `default`, create all your front-end and then, change it to `wordpress`.
@@ -141,7 +141,7 @@ If everything from the Getting Started section goes well, you should have this:
 5. `gulp pages`: Copy all `.php` files from source to generated directory;
 6. `gulp scripts`: Check the quality of all `.js` files, apply babel2015 presets and copy the `js/` files from source to generated directory;
 7. `gulp styles`: Copy `styles/` from source to generated directory;
-7. `gulp set-format --n "Project type"`: Set the project format
+7. `gulp set-format --name "Project type"`: Set the project format
 8. `gulp wp-install`:
 	- Checks if the project has a name;
 	- It also checks if WordPress is already installed;
