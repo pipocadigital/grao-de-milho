@@ -16,7 +16,7 @@ gulp.task('wp-install', function() {
 	if(packageJson.name === 'grao-de-milho') {
 		helper.log('Set the project name using gulp init --p "[Project Name]".', 'danger');
 		helper.log('Stoping...', 'danger');
-		process.exit();
+		process.exit(1);
 	}
 
 	if(wpIsInitialized) {
