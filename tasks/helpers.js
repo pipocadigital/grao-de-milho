@@ -44,7 +44,10 @@ function updateBowerJson(name) {
 	fs.readFile(bowerJsonFile, 'utf8', function (error, data) {
 		checkErrorsAndExit(error);
 
-		writeOn(bowerJsonFile, data.replace(/grao-de-milho/g, slug));
+		const updatedBowerJson = JSON.parse(data);
+		updatedBowerJson.name = slug;
+
+		writeOn(bowerJsonFile, JSON.stringify(updatedBowerJson, null, '  '));
 	});
 }
 
