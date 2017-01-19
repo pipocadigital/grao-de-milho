@@ -7,53 +7,52 @@ const readlineSync = require('readline-sync');
 const helper = require('./helpers');
 
 gulp.task('wp-install', function() {
-	const wpLatestZip = 'https://wordpress.org/latest.zip';
-	const outputZip = 'latest.zip';
 	const packageJson = gulp.config.packageJson;
 	const wpIsInitialized = helper.fileExists('./wordpress/index.php');
-	const projectName = process.argv.splice(process.argv.indexOf('--p'))[1];
+	const projectName = process.argv.splice(process.argv.indexOf('--name'))[1];
 
 	if(packageJson.name === 'grao-de-milho') {
-		helper.log('Set the project name using gulp init --p "[Project Name]".', 'danger');
+		helper.log('Set the project name using gulp init --name "[Project Name]".', 'danger');
 		helper.log('Stoping...', 'danger');
 		process.exit(1);
 	}
 
-	if(wpIsInitialized) {
-		helper.log('Ops! Wordpress is already installed.', 'danger');
-		const answer = readlineSync.question('Do you want to reinstall wordpress? (Y or N) ');
+	helper.log('Downloading WordPress...', 'success');
 
-		if(['N', 'NO'].indexOf(answer.toUpperCase()) >= 0) {
-			helper.log('Stoping...', 'danger');
-			process.exit();
-		} else if(['Y', 'YES'].indexOf(answer.toUpperCase()) < 0) {
-			helper.log('Answer unexpected', 'danger');
-			helper.log('Stoping...', 'danger');
-			process.exit();
-		}
-	}
+	const latestWp = 'https://wordpress.org/latest.zip';
+	const outputZip = 'latest.zip';
+	const wpConfigs = [
+		'wp-config.php',
+		'wp-config-development.php',
+		'wp-config-production.php',
+		'wp-config-staging.php',
+	];
 
-	helper.log('Downloading wordpress...', 'success');
-
-	// Download
 	request({
-		url: wpLatestZip,
+		url: latestWp,
 		encoding: null
-	}, function(reqError, response, body) {
-		if(reqError) throw reqError;
+	}, function(reqError, _, data) {
+		if(reqError) {
+			throw reqError;
+		}
 
-		fs.writeFile(outputZip, body, error => {
-			if(error) throw error;
+		fs.writeFile(outputZip, data, error => {
+			if(error) {
+				throw error;
+			}
 
-			helper.log('Unzipping wordpress...', 'success');
+			helper.log('Unzipping WordPress...', 'success');
 
 			const zip = new AdmZip(outputZip);
 			zip.extractAllTo('./');
 			fs.unlink(outputZip);
 
-			helper.log('Coping wp-config...', 'success');
-			fs.createReadStream('./wp-config.php').pipe(fs.createWriteStream('./wordpress/wp-config.php'));
-			gulp.start('wp-build');
+			helper.log('Coping wp-configs...', 'success');
+
+			wpConfigs.map(wpConfig => {
+				fs.createReadStream(`./tasks/config/wordpress/${wpConfig}`)
+					.pipe(fs.createWriteStream(`./wordpress/${wpConfig}`));
+			})
 		});
 	});
 });

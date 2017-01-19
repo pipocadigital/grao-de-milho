@@ -1,20 +1,10 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
-const readlineSync = require('readline-sync');
-const helper = require('./helpers');
 const del = require('del');
 
 gulp.task('wp-build', function() {
-	const dbName = readlineSync.question('[wp-config] DB name: ');
-	const dbUser = readlineSync.question('[wp-config] DB user: ');
-	const dbPass = readlineSync.question('[wp-config] DB password: ');
-	const dbHost = readlineSync.question('[wp-config] DB host: ');
-	const packageJson = gulp.config.packageJson;
 	const gulpPaths = gulp.paths;
-
-	helper.updateWpConfig({ name: dbName, user: dbUser, pass: dbPass, host: dbHost });
-	helper.updateWpStyle(packageJson.title);
-	helper.updateWpKeys();
+	const packageJson = gulp.config.packageJson;
 
 	del([gulpPaths.themesWp + '*', '!' + gulpPaths.themesWp + packageJson.name, '!' + gulpPaths.themesWp + 'index.php']);
 

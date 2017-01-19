@@ -1,16 +1,13 @@
 // TODO: refactor this file ASAP.
 const fs = require('fs');
 const slugify = require('slugify');
-const request = require('request');
 
-const wpStyleFile = './src/style.css';
-const wpConfigFile = './wp-config.php';
 const bowerJsonFile = './bower.json';
 const packageJsonFile = './package.json';
 
 function rewriteProjectName(name) {
 	if (name === '') {
-		log('Please, give us a project name using the `--p` param.', 'danger');
+		log('Please, give us a project name using the `--name` param.', 'danger');
 		process.exit();
 	}
 
@@ -49,52 +46,6 @@ function updateBowerJson(name) {
 
 		writeOn(bowerJsonFile, JSON.stringify(updatedBowerJson, null, '  '));
 	});
-}
-
-function updateWpStyle(name) {
-	if (fileExists(wpStyleFile)) {
-		fs.readFile(wpStyleFile, 'utf8', function (error, data) {
-			checkErrorsAndExit(error);
-
-			writeOn(wpStyleFile, data.replace(/Grão de Milho/g, name));
-		});
-	}
-}
-
-function updateWpConfig(dbOptions) {
-	fs.readFile(wpConfigFile, 'utf8', function (error, data) {
-		checkErrorsAndExit(error);
-
-		const newWpConfigFile = './wordpress/wp-config.php';
-
-		data = data.replace(/database_name_here/g, dbOptions.name);
-		data = data.replace(/username_here/g, dbOptions.user);
-		data = data.replace(/password_here/g, dbOptions.pass);
-		data = data.replace(/host_here/g, dbOptions.host);
-
-		writeOn(newWpConfigFile, data);
-	});
-}
-
-function updateWpKeys() {
-	const secretKeyUrl = 'https://api.wordpress.org/secret-key/1.1/salt/';
-
-	log('Generating authentication keys', 'success');
-
-	request
-		.get(secretKeyUrl, function (error, response, body) {
-			checkErrorsAndExit(error);
-
-			const wpConfigUrl = './wordpress/wp-config.php';
-
-			fs.readFile(wpConfigUrl, 'utf8', function (err, data) {
-				checkErrorsAndExit(err);
-
-				data = data.replace(/AUTHENTICATION_KEY/gi, body);
-
-				writeOn(wpConfigUrl, data);
-			});
-		});
 }
 
 function getSlug(name) {
@@ -149,8 +100,5 @@ module.exports = {
 	log,
 	writeOn,
 	fileExists,
-	updateWpConfig,
-	rewriteProjectName,
-	updateWpStyle,
-	updateWpKeys
+	rewriteProjectName
 };
