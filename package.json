@@ -13,7 +13,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "init": "gulp init --p",
+    "init": "gulp init --name",
     "start": "npm install && bower install && npm run init",
     "wp": "gulp set-format --name \"wordpress\" && gulp wp-install && gulp wp-build",
     "wp:build": "npm run wp && gulp build",

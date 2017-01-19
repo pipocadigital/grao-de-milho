@@ -57,7 +57,7 @@ If you wanna do more, you can also set it first as `default`, create all your fr
 
 ```bash
 # Set your project name
-$ gulp init --p “My project”
+$ gulp init --name “My project”
 
 # If you're trying to work on a WordPress project, run:
 $ gulp wp
@@ -128,7 +128,7 @@ If everything from the Getting Started section goes well, you should have this:
 	- Runs `gulp build`;
 	- Creates a watcher;
 	- Creates a webserver and open your brower;
-2. `gulp init --p "Your project name"`: Renames the project;
+2. `gulp init --name "Your project name"`: Renames the project;
 3. `gulp wp`: Alias for `gulp wp-install`
 4. `gulp build`: Run all the tasks below, except `wp-install and wp-build`.
 
