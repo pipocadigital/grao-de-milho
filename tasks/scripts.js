@@ -1,11 +1,12 @@
 const gulp = require('gulp');
-const plumber = require('gulp-plumber');
+const iife = require("gulp-iife");
+const babel = require('gulp-babel');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
-const sourcemaps = require('gulp-sourcemaps');
 const jshint = require('gulp-jshint');
-const babel = require('gulp-babel');
+const plumber = require('gulp-plumber');
+const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
 
 gulp.task('scripts', function() {
@@ -26,6 +27,7 @@ gulp.task('scripts', function() {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
+		.pipe(iife())
 		.pipe(concat('main.js'))
 		.pipe(uglify())
 		.pipe(rename({suffix: '.min'}))

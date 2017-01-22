@@ -18,8 +18,8 @@
     "wp": "gulp set-format --name \"wordpress\" && gulp wp-install && gulp wp-build",
     "wp:build": "npm run wp && gulp build",
     "wp:dev": "npm run wp && gulp",
-    "front": "npm run front:format && gulp build",
-    "front:build": "npm run front:format && gulp",
+    "front": "npm run front:format && gulp",
+    "front:build": "npm run front:format && gulp build",
     "front:format": "gulp set-format --name \"default\""
   },
   "sasslintConfig": "sass-lint.yml",
@@ -54,6 +54,7 @@
     "readline-sync": "^1.4.4",
     "request": "^2.75.0",
     "require-dir": "^0.3.0",
-    "slugify": "^1.0.2"
+    "slugify": "^1.0.2",
+    "gulp-iife": "^0.3.0"
   }
 }

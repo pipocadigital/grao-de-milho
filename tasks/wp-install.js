@@ -11,7 +11,7 @@ gulp.task('wp-install', function() {
 	const wpIsInitialized = helper.fileExists('./wordpress/index.php');
 	const projectName = process.argv.splice(process.argv.indexOf('--name'))[1];
 
-	if(packageJson.name === 'grao-de-milho') {
+	if(packageJson.name === 'grao-de-milho' || packageJson.name === '') {
 		helper.log('Set the project name using gulp init --name "[Project Name]".', 'danger');
 		helper.log('Stoping...', 'danger');
 		process.exit(1);
