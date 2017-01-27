@@ -4,7 +4,8 @@ const requireDir = require('require-dir');
 const packageJson = require('./package.json');
 
 const baseConfig = {
-	port: '3000',
+	port: 3000,
+	phpPort: 3838,
 	localhost: 'localhost',
 	packageJson: packageJson,
 	format: packageJson.projectFormat ? packageJson.projectFormat : 'default',
