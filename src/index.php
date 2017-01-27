@@ -1,1 +1,10 @@
-<strong>It works!</strong>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<strong>It works!</strong>
+</body>
+</html>
