@@ -3,6 +3,12 @@ const gulpSync = require('gulp-sync')(gulp);
 const requireDir = require('require-dir');
 const packageJson = require('./package.json');
 
+let defaultTasks = ['build', 'watch', 'connect-sync'];
+
+if (packageJson.projectFormat === 'wordpress') {
+	defaultTasks.push('wp-build');
+}
+
 const baseConfig = {
 	port: 3000,
 	phpPort: 3838,
@@ -50,7 +56,7 @@ gulp.config = baseConfig;
 // Gulp tasks
 requireDir('tasks');
 
-gulp.task('default', gulpSync.sync(['build', 'watch', 'connect-sync']));
+gulp.task('default', gulpSync.sync(defaultTasks));
 
 gulp.task('wp', gulpSync.sync(['wp-install']));
 
