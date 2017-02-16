@@ -58,11 +58,10 @@ gulp.task('build', gulpSync.sync([
 	'clean', 'styles', 'scripts', 'pages', 'images', 'fonts', 'libs'
 ]));
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
 	gulp.watch(gulp.paths.styles, ['styles']);
 	gulp.watch(gulp.paths.scripts, ['scripts']);
 	gulp.watch(gulp.paths.pages, ['pages']);
 	gulp.watch(gulp.paths.images, ['images']);
-	gulp.watch(gulp.paths.fonts, ['fonts']);
 	gulp.watch(gulp.paths.fonts, ['fonts']);
 });
