@@ -23,56 +23,68 @@ First of all, make sure you have installed the main dependencies:
 
 - [Git](https://git-scm.com/downloads)
 - [NodeJS](https://nodejs.org/en/download/)
-- [Bower](https://bower.io/#install-bower)
-- [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#1-install-gulp-globally)
 
 ```bash
 # Clone it:
-$ git clone git@github.com:pipocadigital/grao-de-milho.git my-project-name
+$ git clone git@github.com:pipocadigital/grao-de-milho.git my-project-folder
 
 # Then, go to the project's folder:
-$ cd my-project-name
+$ cd my-project-folder
 
-# Install your dependencies:
-$ npm install
+# Install your dependencies and Init a new project by running:
+$ npm start --name "My cool project name"
 ```
 
-Now, set the project format.
+We can create two types of projects. A Front-end (`front`) and a WordPress (`wp`) project.
 
-```js
-$ gulp set-format --name [<default|wordpress>]
+#### Front-end Dev
+
+```
+$ npm run front:dev
 ```
 
-1. `default`: You’ll work on a Front-end project. Gulp will create a `www` folder on your project’s root.
-2. `wordpress`: (Default) You’ll work on a WordPress project. Gulp will create a `wordpress` folder on your project’s root.
-When you run the commands below, the WordPress structure will be created, your theme will be named with your project name, etc.
+1. Set the project format;
+2. Generate your compiled files inside a folder called `www` and start your development server;
+5. Open a new tab on your browser running a development server.
 
-For example:
+#### Front-end Deploy
 
-```js
-$ gulp set-format --name wordpress
+```
+$ npm run front:build
 ```
 
-If you wanna do more, you can also set it first as `default`, create all your front-end and then, change it to `wordpress`.
+1. Set the project format;
+2. Generate your compiled files inside a folder called `www`.
 
-```bash
-# Set your project name
-$ gulp init --name “My project”
+#### WordPress Dev
 
-# If you're trying to work on a WordPress project, run:
-$ gulp wp
-
-# Then, run!
-$ gulp
+```
+$ npm run wp:dev
 ```
 
-Wait a few, and the last command will run a development server at `http://localhost:3000/`. It will open a new tab on your browser.
+1. Set the project format;
+2. Download WordPress inside a folder called `wordpress/`
+3. Copy your style.css, plugins, wp-configs.php files to the correct place.
+4. Generate your theme based on your compiled files.
+5. After all it will open a new tab on your browser running a development server.
+
+#### WordPress Deploy
+
+```
+$ npm run wp:build
+```
+
+1. Set the project format;
+2. Download WordPress inside a folder called `wordpress/`
+3. Copy your style.css, plugins, wp-configs.php files to the correct place.
+4. Generate your theme based on your compiled files.
+
 
 ### Technologies
 
 - NodeJS
 - Gulp
-- JS (ES6)
+- JS (ES2015)
 - Sass
 - HTML5
 - WordPress
@@ -121,9 +133,11 @@ If everything from the Getting Started section goes well, you should have this:
 ```
 
 
-### Tasks
+### Gulp Tasks
 
-##### Featured...
+If you're running gulp globally, so you can use all the tasks below:
+
+##### Featured tasks...
 1. `gulp`:
 	- Runs `gulp build`;
 	- Creates a watcher;
@@ -132,7 +146,7 @@ If everything from the Getting Started section goes well, you should have this:
 3. `gulp wp`: Alias for `gulp wp-install`
 4. `gulp build`: Run all the tasks below, except `wp-install and wp-build`.
 
-##### More...
+##### More tasks...
 1. `gulp clean`: Remove all the files from generated directory;
 2. `gulp fonts`: Copy `fonts/` from source to generated directory;
 3. `gulp images`: Copy `images/` from source to generated directory;
