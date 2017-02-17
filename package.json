@@ -16,11 +16,11 @@
     "init": "gulp init --name",
     "start": "npm install && bower install && npm run init",
     "wp": "gulp set-format --name \"wordpress\" && gulp wp-install && gulp wp-build",
-    "wp:build": "npm run wp && gulp build",
     "wp:dev": "npm run wp && gulp",
-    "front": "npm run front:format && gulp",
-    "front:build": "npm run front:format && gulp build",
-    "front:format": "gulp set-format --name \"default\""
+    "wp:build": "npm run wp && gulp build",
+    "front": "gulp set-format --name \"default\"",
+    "front:dev": "npm run front && gulp",
+    "front:build": "npm run front && gulp build"
   },
   "sasslintConfig": "sass-lint.yml",
   "devDependencies": {
