@@ -68,6 +68,12 @@ $ npm run wp:dev
 4. Generate your theme based on your compiled files.
 5. After all it will open a new tab on your browser running a development server.
 
+To keep working on your WordPress project whithout donwload it everytime, just run:
+
+```
+$ npm run serve
+```
+
 #### WordPress Deploy
 
 ```
