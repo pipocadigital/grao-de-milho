@@ -1,4 +1,4 @@
-<p align="center"><img width="480" src="http://i.giphy.com/3o6gEf38BrzrRYbDXi.gif"></p>
+<p align="center"><img src="http://upload-gifs.s3-sa-east-1.amazonaws.com/e3ea1527-cb01-4727-b3e3-2d52169b6e44_grao-de-milho.jpg"></p>
 
 An initiative of [Pipoca Digital](http://www.pipocadigital.com.br) to help those people who want to create Static or WordPress websites easily.
 
