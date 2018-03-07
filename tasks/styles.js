@@ -8,7 +8,9 @@ const sassLint = require('gulp-sass-lint');
 const browserSync = require('browser-sync');
 
 gulp.task('styles', function() {
-	return gulp.src(gulp.paths.styles)
+	const {paths} = gulp;
+
+	gulp.src(paths.styles)
 		.pipe(plumber({
 			errorHandler: error => {
 				console.log(error.message);
@@ -25,6 +27,15 @@ gulp.task('styles', function() {
 		.pipe(sourcemaps.write('.', {
 			mapFile: mapFilePath => mapFilePath.replace('.js.map', '.map')
 		}))
-		.pipe(gulp.dest(gulp.paths.stylesDest))
-		.pipe(browserSync.reload({stream: true}))
+		.pipe(gulp.dest(paths.stylesDest))
+		.pipe(browserSync.reload({stream: true}));
+
+	gulp.src('src/style.css')
+		.pipe(plumber({
+			errorHandler: error => {
+				console.log(error.message);
+				this.emit('end');
+			}
+		}))
+		.pipe(gulp.dest(paths.pagesDest));
 });

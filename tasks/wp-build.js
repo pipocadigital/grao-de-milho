@@ -7,13 +7,4 @@ gulp.task('wp-build', function() {
 	const packageJson = gulp.config.packageJson;
 
 	del([gulpPaths.themesWp + '*', '!' + gulpPaths.themesWp + packageJson.name, '!' + gulpPaths.themesWp + 'index.php']);
-
-	gulp.src('src/style.css')
-		.pipe(plumber({
-			errorHandler: error => {
-				console.log(error.message);
-				this.emit('end');
-			}
-		}))
-		.pipe(gulp.dest(gulpPaths.pagesDest));
 });
