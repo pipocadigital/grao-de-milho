@@ -6,7 +6,7 @@ const packageJson = require('./package.json');
 let defaultTasks = ['build', 'watch', 'connect-sync'];
 
 if (packageJson.projectFormat === 'wordpress') {
-	defaultTasks.push('wp-build');
+	defaultTasks.push('wp-pre-build');
 }
 
 const baseConfig = {
