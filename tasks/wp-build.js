@@ -8,15 +8,6 @@ gulp.task('wp-build', function() {
 
 	del([gulpPaths.themesWp + '*', '!' + gulpPaths.themesWp + packageJson.name, '!' + gulpPaths.themesWp + 'index.php']);
 
-	gulp.src([gulpPaths.pluginsWp])
-		.pipe(plumber({
-			errorHandler: error => {
-				console.log(error.message);
-				this.emit('end');
-			}
-		}))
-		.pipe(gulp.dest('wordpress/wp-content/plugins/'));
-
 	gulp.src('src/style.css')
 		.pipe(plumber({
 			errorHandler: error => {

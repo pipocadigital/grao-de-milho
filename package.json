@@ -16,9 +16,10 @@
     "serve": "gulp",
     "init": "gulp init --name",
     "start": "npm install && bower install && npm run init",
-    "wp": "gulp set-format --name \"wordpress\" && gulp wp-install && gulp wp-build",
+    "wp": "gulp set-format --name \"wordpress\" && gulp wp-install && gulp wp-build && npm run wp:plugins",
     "wp:dev": "npm run wp && gulp",
     "wp:build": "npm run wp && gulp build",
+    "wp:plugins": "cp -r ./plugins ./wordpress/wp-content",
     "front": "gulp set-format --name \"default\"",
     "front:dev": "npm run front && gulp",
     "front:build": "npm run front && gulp build"
