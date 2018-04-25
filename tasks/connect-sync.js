@@ -12,6 +12,9 @@ gulp.task('connect-sync', function() {
 
 	connect.server(serverConfig, () => browserSync({
 		proxy: proxy,
-		port: gulp.config.port
+		port: gulp.config.port,
+		snippetOptions: {
+			ignorePaths: ['wp-admin/**']
+		}
 	}));
 });
