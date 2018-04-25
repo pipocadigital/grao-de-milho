@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const plumber = require('gulp-plumber');
 const del = require('del');
 
 gulp.task('wp-pre-build', function() {

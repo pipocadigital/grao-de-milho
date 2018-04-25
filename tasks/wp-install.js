@@ -1,8 +1,7 @@
 const gulp = require('gulp');
 const request = require('request');
-const zlib = require('zlib');
 const fs = require('fs');
-const AdmZip = require('adm-zip');
+const admZip = require('adm-zip');
 const readlineSync = require('readline-sync');
 const helper = require('./helpers');
 
@@ -43,7 +42,7 @@ gulp.task('wp-install', function() {
 
 			helper.log('Unzipping WordPress...', 'success');
 
-			const zip = new AdmZip(outputZip);
+			const zip = new admZip(outputZip);
 			zip.extractAllTo('./');
 			fs.unlink(outputZip);
 

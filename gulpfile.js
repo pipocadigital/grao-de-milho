@@ -1,52 +1,53 @@
 const gulp = require('gulp');
 const gulpSync = require('gulp-sync')(gulp);
-const requireDir = require('require-dir');
+const requireTasksDir = require('require-dir');
 const packageJson = require('./package.json');
 
-const baseConfig = {
+const config = {
+	packageJson,
 	port: 3000,
 	phpPort: 3838,
-	localhost: 'localhost',
-	packageJson: packageJson,
-	compressed: true
+	localhost: 'localhost'
 };
 
-const wpThemePath = 'wordpress/wp-content/themes/' + packageJson.name;
-const paths = {
+const developmentPaths = {
+	pages: 'src/**/*.php',
+	fonts: 'src/fonts/**/*.*',
+	images: 'src/images/**/*.*',
+	styles: 'src/css/**/*.sass',
+	scripts: 'src/js/**/*.js'
+};
+
+const themes = 'wordpress/wp-content/themes/';
+const theTheme = themes + packageJson.name;
+const paths = Object.assign({
 	basePath: 'wordpress/',
-	pluginsWp: 'plugins/**/*.*',
 	styleWp: 'src/style.css',
 	configWp: 'wp-config.php',
-	pagesDest: wpThemePath,
-	fontsDest: wpThemePath + '/fonts',
-	imagesDest: wpThemePath + '/images',
-	stylesDest: wpThemePath + '/css',
-	scriptsDest: wpThemePath + '/js',
-	themesWp: 'wordpress/wp-content/themes/'
-};
+	pluginsWp: 'plugins/**/*.*',
 
-const devPaths = {
-	pages: 'src/**/*.php',
-	scripts: 'src/js/**/*.js',
-	styles: 'src/css/**/*.sass',
-	images: 'src/images/**/*.*',
-	fonts: 'src/fonts/**/*.*'
-};
+	themesWp: themes,
+	pagesDest: theTheme,
+	fontsDest: `${theTheme}/fonts`,
+	imagesDest: `${theTheme}/images`,
+	stylesDest: `${theTheme}/css`,
+	scriptsDest: `${theTheme}/js`
+}, developmentPaths);
 
-gulp.paths = Object.assign(devPaths, paths);
-gulp.config = baseConfig;
+gulp.paths = paths;
+gulp.config = config;
 
-// Gulp tasks
-requireDir('tasks');
+requireTasksDir('tasks');
 
 gulp.task('wp', gulpSync.sync(['wp-install']));
 gulp.task('default', gulpSync.sync(['build', 'watch', 'connect-sync']));
 gulp.task('build', gulpSync.sync(['clean', 'styles', 'scripts', 'pages', 'images', 'fonts', 'libs']));
 
 gulp.task('watch', () => {
-	gulp.watch(gulp.paths.styles, ['styles']);
-	gulp.watch(gulp.paths.scripts, ['scripts']);
-	gulp.watch(gulp.paths.pages, ['pages']);
-	gulp.watch(gulp.paths.images, ['images']);
-	gulp.watch(gulp.paths.fonts, ['fonts']);
+	const paths = Object.keys(developmentPaths);
+
+	paths.map(path => {
+		// Combine each development task with a task
+		return gulp.watch(gulp.paths[path], [path]);
+	});
 });
