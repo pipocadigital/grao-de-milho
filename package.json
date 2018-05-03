@@ -18,8 +18,9 @@
     "start": "npm install && bower install && npm run init",
     "wp": "gulp wp-install && gulp wp-pre-build && npm run wp:plugins",
     "wp:dev": "npm run wp && gulp",
-    "wp:build": "npm run wp && gulp build",
-    "wp:plugins": "cp -r ./plugins ./wordpress/wp-content"
+    "wp:build": "npm run wp && gulp build && npm run assets-version",
+    "wp:plugins": "cp -r ./plugins ./wordpress/wp-content",
+    "assets-version": "gulp asssets-new-version"
   },
   "sasslintConfig": "sass-lint.yml",
   "devDependencies": {
@@ -33,6 +34,7 @@
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-cache": "^1.0.2",
+    "gulp-cachebust": "0.0.10",
     "gulp-clean-css": "^3.9.3",
     "gulp-concat": "^2.6.1",
     "gulp-connect-php": "1.0.3",
