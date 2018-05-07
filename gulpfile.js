@@ -47,7 +47,9 @@ gulp.task('watch', () => {
 	const paths = Object.keys(developmentPaths);
 
 	paths.map(path => {
+		const task = path;
+
 		// Combine each development path with a task
-		return gulp.watch(gulp.paths[path], [path]);
+		return gulp.watch(gulp.paths[path], [task]);
 	});
 });
