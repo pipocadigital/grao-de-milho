@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-</head>
-<body>
-	<strong>It works!</strong>
-</body>
-</html>
+<?php get_header() ?>
+
+<main>
+
+</main>
+
+<?php get_footer() ?>
