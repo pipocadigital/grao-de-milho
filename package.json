@@ -18,8 +18,9 @@
     "start": "npm install && bower install && npm run init",
     "wp": "gulp wp-install && gulp wp-pre-build && npm run wp:plugins",
     "wp:dev": "npm run wp && gulp",
-    "wp:build": "npm run wp && gulp build && npm run assets-version",
+    "wp:build": "npm run wp && gulp build && npm run assets-version && npm run inline-css",
     "wp:plugins": "cp -r ./plugins ./wordpress/wp-content",
+    "inline-css": "gulp inline-css",
     "assets-version": "gulp asssets-new-version"
   },
   "sasslintConfig": "sass-lint.yml",
@@ -46,6 +47,7 @@
     "gulp-main-bower-files": "^1.6.2",
     "gulp-plumber": "^1.2.0",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
     "gulp-sass": "^4.0.1",
     "gulp-sass-lint": "^1.3.4",
     "gulp-sourcemaps": "^2.6.4",
