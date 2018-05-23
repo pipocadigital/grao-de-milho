@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:9.11
+    working_directory: ~/grao-de-milho
     steps:
+      - checkout
       - run: npm install
       - run: npm test
