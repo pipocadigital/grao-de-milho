@@ -4,7 +4,7 @@ const CacheBust = require('gulp-cachebust');
 
 const cache = new CacheBust({
 	pathFormatter(dirname, basename, extname, checksum) {
-		return path.join(dirname, basename + '.' + checksum + extname);
+	  	return path.join(dirname, basename + '.' + checksum + extname);
 	}
 });
 
