@@ -8,10 +8,11 @@
     "url": ""
   },
   "engines": {
-    "node": "^5.0.0",
-    "npm": "^3.4.1"
+    "node": "^7.3.0"
   },
   "scripts": {
+    "test": "npm run editorconfig-check",
+    "editorconfig-check": "eclint check ./src/**/*.php ./src/css/**/* ./src/js/**/*  ./tasks/**/*",
     "postinstall": "bower install",
     "serve": "gulp",
     "init": "gulp init --name",
@@ -31,6 +32,7 @@
     "bower": "^1.8.4",
     "browser-sync": "^2.24.2",
     "del": "^3.0.0",
+    "eclint": "^2.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
