@@ -3,6 +3,7 @@ www/
 src/libs
 /wordpress/
 linters/
+/db/
 
 .DS_Store
 .ftppass
