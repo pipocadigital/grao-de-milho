@@ -37,7 +37,7 @@
     "browser-sync": "^2.24.2",
     "del": "^3.0.0",
     "eclint": "^2.7.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-cache": "^1.0.2",
